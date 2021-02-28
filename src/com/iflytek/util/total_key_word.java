@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import com.iflytek.util.total_strdeal;
+
 public class total_key_word {
 	static String recent_name_path = "C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\data\\";//存储pcm转字符串记录的路径
 	static String pcmdata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\pcmdata\\\\";//存储pcm文件的路径
@@ -45,6 +47,7 @@ public class total_key_word {
 			//System.out.println(nowtime + "另一个" + x);
 			if(nowtime < x)
 			{
+				
 				flag = true;
 				System.out.println("开始对"+x+ "进行关键字提取");
 				kword.get_keyword(fileNameLists[i],appid,api_key,path,x+".txt",keydata_path);

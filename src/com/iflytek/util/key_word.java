@@ -38,6 +38,8 @@ public class key_word {
 
 	private static final String TYPE = "dependent";
 	
+	private static final String celue1path = "C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\celue\\";
+	
 	public static void main(String[] args) throws IOException {
 		System.out.println(TEXT.length());
 		Map<String, String> header = buildHttpHeader();
@@ -83,10 +85,14 @@ public class key_word {
 		return result;
 		
 	}
+	
+	//进行关键字的提取和策略一的进行
 	public String get_keyword(String filename,String appid,String api_key,String path,String savefilename,String savepath) throws UnsupportedEncodingException
 	{
 		String text;
 		int i;
+		total_strdeal strdeal =new total_strdeal();
+		
 		JSONObject jsonobject = new JSONObject();
 		JSONObject rejsonobject = new JSONObject();
 		JSONObject kejsonobject = new JSONObject();
@@ -112,6 +118,16 @@ public class key_word {
 		
 		for(i=0;i<linecount;i++)
 		{
+			String future = strdeal.Judge1(jsonobject.getString(""+i));
+			String curTime = System.currentTimeMillis() / 1000L + "";
+			int Timename = Integer.parseInt(curTime);
+			Timename = Timename/86400;
+			if(future.length()>1)
+			{
+				System.out.println(future+ "识别成功");
+				write_data(celue1path,future,Timename+".txt");
+			}
+			
 			result = HttpUtil.doPost1(WEBTTS_URL, header, "text=" + URLEncoder.encode(jsonobject.getString(""+i), "utf-8"))+" ";
 			System.out.println("提取结果为"+ result);
 			rejsonobject = JSON.parseObject(result);
@@ -148,7 +164,7 @@ public class key_word {
 	/**
 	 * 组装http请求头
 	 */
-	private static void write_data(String path,String data,String Filename)//往指定文件写入data并换行
+	private static void write_data(String path,String data,String Filename)//往指定文件添加写入data并换行
 	{
 		String filename = path +Filename;
 		try {

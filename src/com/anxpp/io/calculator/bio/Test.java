@@ -40,7 +40,7 @@ public class Test {
 			}
 		}).start();
 		
-		new Thread(new Runnable() {  //str提取关键字线程
+		new Thread(new Runnable() {  //str处理线程（提取关键字，策略一匹配）
 			@Override
 			public void run() {
 				try {
