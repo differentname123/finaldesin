@@ -16,6 +16,10 @@ public class test {
     
     public static void main(String[] args) {
         //添加文件路径
-        getFiles("C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\pcmdata\\");
+        File dir = new File("./chuangjian");
+        if (!dir.exists()) {// 判断目录是否存在     
+            dir.mkdir();   
+            System.out.println("创建成功");
+        }
     }
 }

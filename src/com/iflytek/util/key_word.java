@@ -38,7 +38,8 @@ public class key_word {
 
 	private static final String TYPE = "dependent";
 	
-	private static final String celue1path = "C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\celue\\";
+	private static final String celue1path = "./celue1";
+	private static final String celue2path = "./celue2";
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println(TEXT.length());
@@ -93,31 +94,24 @@ public class key_word {
 		int i;
 		total_strdeal strdeal =new total_strdeal();
 		
+		File_ways file_ways = new File_ways();
+		
 		JSONObject jsonobject = new JSONObject();
 		JSONObject rejsonobject = new JSONObject();
 		JSONObject kejsonobject = new JSONObject();
-		JSONObject keyjsonobject = new JSONObject();
-		JSONObject finaljsonobject = new JSONObject();
-		JSONObject resultobject = new JSONObject();
 		String redata;
 		int linecount;
 		String result= "";
-		text =get_string(path+filename);
+		text =get_string(path+"\\"+filename);
 		jsonobject = JSON.parseObject(text);
 		linecount = jsonobject.getIntValue("linecount");
 		Map<String, String> header = buildHttpHeader();
 		
-		
-		String str=savepath+savefilename;
-		File file = new File(str);
-		if(file.exists())
-		{
-			file.delete();
-		}// 创建新文件,有同名的文件的话直接覆盖
-        
+		file_ways.init(savepath, savefilename);
 		
 		for(i=0;i<linecount;i++)
 		{
+			System.out.println("开始对celue1");
 			String future = strdeal.Judge1(jsonobject.getString(""+i));
 			String curTime = System.currentTimeMillis() / 1000L + "";
 			int Timename = Integer.parseInt(curTime);
@@ -125,9 +119,27 @@ public class key_word {
 			if(future.length()>1)
 			{
 				System.out.println(future+ "识别成功");
-				write_data(celue1path,future,Timename+".txt");
+				file_ways.write_data(celue1path,future,Timename+".txt");
 			}
+			System.out.println("开始对celue2");
+			//进行策略二的实现
+			String result11 = strdeal.sa(jsonobject.getString(""+i));;
+			JSONObject saobject = new JSONObject();
+			saobject = JSON.parseObject(result11);
+			String sascore = saobject.getString("score");
+			String sasentiment = saobject.getString("sentiment");
+			double satemp =  Double.parseDouble(sascore);
+			int sasenttemp = Integer.parseInt(sasentiment);
+			int tempre =  (int) (10000*satemp*sasenttemp);
+			//该进行存储了，还有就是规范路径
 			
+			file_ways.write_data(celue2path,tempre+"",curTime+".txt");//按照   关键字：权重的格式一行一行写入文件
+			System.out.println(sascore+" "+sasentiment);
+			
+			
+			
+			System.out.println("开始对进行关键字提取");
+			//进行关键词的提取和存储
 			result = HttpUtil.doPost1(WEBTTS_URL, header, "text=" + URLEncoder.encode(jsonobject.getString(""+i), "utf-8"))+" ";
 			System.out.println("提取结果为"+ result);
 			rejsonobject = JSON.parseObject(result);
@@ -154,7 +166,7 @@ public class key_word {
 				{
 					word+=redata.charAt(ii);
 				}
-				write_data(savepath,word+":"+score,savefilename);//按照   关键字：权重的格式一行一行写入文件
+				file_ways.write_data(savepath,word+":"+score,savefilename);//按照   关键字：权重的格式一行一行写入文件
 				System.out.println(word+": "+score+"存入成功");
 			}
 		}
@@ -164,26 +176,6 @@ public class key_word {
 	/**
 	 * 组装http请求头
 	 */
-	private static void write_data(String path,String data,String Filename)//往指定文件添加写入data并换行
-	{
-		String filename = path +Filename;
-		try {
-            File writeName = new File(filename); // 相对路径，如果没有则要建立一个新的output.txt文件
-            if(!writeName.exists())
-            {
-            	writeName.createNewFile(); // 创建新文件
-            }
-            
-            try (FileWriter writer = new FileWriter(writeName,true);
-                 BufferedWriter out = new BufferedWriter(writer)
-            ) {
-                out.write(data+"\r\n"); // \r\n即为换行
-                out.flush(); // 把缓存区内容压入文件
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 	private static Map<String, String> buildHttpHeader() throws UnsupportedEncodingException {
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		String param = "{\"type\":\"" + TYPE +"\"}";

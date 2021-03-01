@@ -114,6 +114,49 @@ public class total_strdeal {
 		System.out.print("\n");
 		return finaltemp;		
 	}
+	
+	public  String sa(String str)//对指定字符串str进行情感分析，返回每个词的词性
+	{
+		String result= "";
+		JSONObject object = new JSONObject();
+		
+		String local = "http://ltpapi.xfyun.cn/v2/" + "sa" ;
+		Map<String, String> header = null;
+		try {
+			header = buildHttpHeader();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			result = HttpUtil.doPost1(local, header, "text=" + URLEncoder.encode(str, "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		object = JSON.parseObject(result);
+		String data = object.getString("data");
+		System.out.println(result);
+		
+		JSONObject dataobject = new JSONObject();
+		
+		dataobject = JSON.parseObject(data);
+		String word = dataobject.getString("score");
+		//System.out.println(word);
+		return data;		
+	}
+	public  void Judge2(String str)
+	{
+		String result = sa(str);
+		JSONObject object = new JSONObject();
+		object = JSON.parseObject(result);
+		String score = object.getString("score");
+		String sentiment = object.getString("sentiment");
+		
+		System.out.println(score+" "+sentiment);
+		
+	}
 	public String Judge1(String str)//实现策略一匹配找出未来将要做的事情
 	{
 		String result = "";
@@ -169,6 +212,7 @@ public class total_strdeal {
 	}
 	public static void main(String[] args) throws IOException {
 		//System.out.println(Judge1("我要飞得更高"));
+		//Judge2("我爱你");
 	}
 
 	/**

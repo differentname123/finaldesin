@@ -12,21 +12,28 @@ import java.io.UnsupportedEncodingException;
 import com.iflytek.util.total_strdeal;
 
 public class total_key_word {
-	static String recent_name_path = "C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\data\\";//存储pcm转字符串记录的路径
-	static String pcmdata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\pcmdata\\\\";//存储pcm文件的路径
-	static String txtdata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\txtdata\\\\";//存储string字符串文件的路径
-	static String keydata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\keydata\\\\";//存储string字符串文件的路径
-	static key_word kword=new key_word();
+	static String RECENT_PATH = "./data";//存储pcm转字符串记录和str数据处理记录的路径
+	static String STRDATA_JILU = "str_record.txt";//存储pcm转字符串记录和str数据处理记录的路径
+	static String STRDATA_PATH = "./stringdata";//存储string字符串文件的路径
+	static String KEYDATA_PATH = "./keydata";//存储string字符串文件的路径
+	static String PCMDATA_JILU = "pcm_record.txt";//存储pcm记录的文件名
+	
 	final static String appid = "5fed5ca2";
 	final static String api_key = "31c6c1836c5c2946fdf18ca5a9fddc5d";
 	static boolean flag;
+	
+	
+	static key_word kword=new key_word();//声明一个关键字提取对象
+	static File_ways file_ways = new File_ways();//声明一个文件处理对象
+	
 	public static void start() throws IOException{
 		//使用默认值
 		System.out.println("关键字提取线程开始");
 		String recentname ="";
+		file_ways.init1(RECENT_PATH, STRDATA_JILU);
 		while(true)
 		{
-			recentname = get_recent_strname(recent_name_path);
+			recentname = file_ways.get_recent_name(RECENT_PATH,STRDATA_JILU);//获取最近的转换记录，方便下一次转换
 			flag = str_zhuanhuan(recentname);
 			if(flag)
 				System.out.println(" 等待新的str文件进行提取");
@@ -36,22 +43,36 @@ public class total_key_word {
 	{
 		boolean flag = false;
 		String str_re = null;
-		String path = txtdata_path;
+		String pcmrec = file_ways.get_recent_name(RECENT_PATH,PCMDATA_JILU);//获取最近的转换记录，方便下一次转换
+		
+		int texx = Integer.parseInt(pcmrec);
 		int nowtime = Integer.parseInt(recentname);
-	    File file = new File(path);
+	    File file = new File(STRDATA_PATH);
 	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
-	    
+	    if(fileNameLists==null)
+	    	return false;
 		for(int i = 0; i < fileNameLists.length; i ++){
 			String[] temp = fileNameLists[i].split("\\.");// .号需要进行转义  加上右双斜杠
 			int x= Integer.parseInt(temp[0]);
 			//System.out.println(nowtime + "另一个" + x);
+			//System.out.println(nowtime+" 读取的值为"+pcmrec);
+			if(texx<=nowtime)//等待2秒，避免pcm还未转化完成
+			{
+				Thread.currentThread();//等待是否出现一句话
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			if(nowtime < x)
 			{
-				
+
 				flag = true;
-				System.out.println("开始对"+x+ "进行关键字提取");
-				kword.get_keyword(fileNameLists[i],appid,api_key,path,x+".txt",keydata_path);
-				write_recent_name(recent_name_path,""+x);//该进行记录的回写
+				System.out.println(" 开始对"+x+"进行文字处理");
+				kword.get_keyword(fileNameLists[i],appid,api_key,STRDATA_PATH,x+".txt",KEYDATA_PATH);
+				file_ways.write_recent_name(RECENT_PATH,""+x,STRDATA_JILU);//该进行记录的回写
 				nowtime = x;
 
 				//转换后内容的写入
@@ -59,65 +80,6 @@ public class total_key_word {
 		}
 		return flag;
 	}
-	
-	private static void write_string(String path,String data,String name)
-	{
-		String filename = path + name;
-		try {
-            File writeName = new File(filename); // 相对路径，如果没有则要建立一个新的output.txt文件
-            writeName.createNewFile(); // 创建新文件,有同名的文件的话直接覆盖
-            try (FileWriter writer = new FileWriter(writeName);
-                 BufferedWriter out = new BufferedWriter(writer)
-            ) {
-            	String[] temp = data.split(" ");// .号需要进行转义  加上右双斜杠
-            	for(int i=0;i<temp.length;i++)
-            	{
-            		out.write(temp[i]+"\r\n"); // \r\n即为换行
-            	}
-                
-                out.flush(); // 把缓存区内容压入文件
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	private static void write_recent_name(String path,String data)
-	{
-		String filename = path + "str_record.txt";
-		try {
-            File writeName = new File(filename); // 相对路径，如果没有则要建立一个新的output.txt文件
-            writeName.createNewFile(); // 创建新文件,有同名的文件的话直接覆盖
-            try (FileWriter writer = new FileWriter(writeName);
-                 BufferedWriter out = new BufferedWriter(writer)
-            ) {
-                out.write(data+"\r\n"); // \r\n即为换行
-                out.flush(); // 把缓存区内容压入文件
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	private static String get_recent_strname(String path)
-	{
-		String result ="";
-		String filename = path + "str_record.txt";//记录最近转换完成的文件名
-		BufferedReader reader = null;
-        try {
 
-        	reader=new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
-            // 一次读入一行，直到读入null为文件结束
-            result = reader.readLine();
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
-		return result;
-	}
+
 }

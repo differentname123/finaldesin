@@ -91,7 +91,7 @@ public class Voice_to_String {
 		int len=data.length;//此时为64*1024即有这么长
 
 		try {
-			fis=new FileInputStream(new File(path+fileName));
+			fis=new FileInputStream(new File(path+"\\"+fileName));
 			//文件剩余长度如果没有，就显示没有了
 			if(0==fis.available()) {
 				mResult.append("no audio avaible!");

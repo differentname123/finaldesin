@@ -12,17 +12,23 @@ import java.util.ArrayList;
 public class total_voice_tostring {
 	static String APPID="5fed5ca2";
 	///规范文件路径的命名
-	static String recent_name_path = "C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\data\\";//存储pcm转字符串记录的路径
-	static String pcmdata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\pcmdata\\\\";//存储pcm文件的路径
-	static String txtdata_path = "C:\\\\Users\\\\24349\\\\eclipse-workspace\\\\voice_serve1.0\\\\txtdata\\\\";//存储string字符串文件的路径
+	static String RECENT_PATH = "./data";//存储pcm转字符串记录和str数据处理记录的路径
+	static String PCMDATA_PATH = "./pcmdata";//存储pcm文件的路径
+	static String PCMDATA_JILU = "pcm_record.txt";//存储pcm记录的文件名
+	static String STRDATA_PATH = "./stringdata";//存储string字符串文件的路径
+	
+	static File_ways file_ways = new File_ways();//声明一个文件处理对象
+	
+	
 	public static void start() throws IOException{
 		//使用默认值
 		System.out.println("pcm转String线程开始");
 		String recentname ="";
 		boolean flag;
+		file_ways.init1(RECENT_PATH, PCMDATA_JILU);
 		while(true)
 		{
-			recentname = get_recent_name(recent_name_path);
+			recentname = file_ways.get_recent_name(RECENT_PATH,PCMDATA_JILU);//获取最近的转换记录，方便下一次转换
 			flag = judge_zhuanhuan(recentname);
 			if(flag)
 				System.out.println(" 等待新的pcm文件进行转换");
@@ -34,9 +40,10 @@ public class total_voice_tostring {
 	{
 		boolean flag = false;
 		String str_re;
-		String path = pcmdata_path;
+		
+		
 		int nowtime = Integer.parseInt(recentname);
-	    File file = new File(path);
+	    File file = new File(PCMDATA_PATH);
 	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
 	    
 		for(int i = 0; i < fileNameLists.length; i ++){
@@ -47,10 +54,10 @@ public class total_voice_tostring {
 			{
 				flag =true;
 				System.out.println(x+" 开始从pcm转换为String");
-				str_re = Voice_to_String.convert(APPID, fileNameLists[i],path);
+				str_re = Voice_to_String.convert(APPID, fileNameLists[i],PCMDATA_PATH);
 				System.out.println(x+" 转换结果" + str_re);
-				write_recent_name(recent_name_path,""+x);//该进行记录的回写
-				write_string(txtdata_path,str_re,x+".txt");
+				file_ways.write_recent_name(RECENT_PATH,""+x,PCMDATA_JILU);//该进行记录的回写
+				file_ways.write_string(STRDATA_PATH,str_re,x+".txt");
 				nowtime = x;
 				System.out.println(x+" 转换完成");
 				//转换后内容的写入
@@ -59,67 +66,8 @@ public class total_voice_tostring {
 		}
 		return flag;
 	}
-	private static void write_string(String path,String data,String name)
-	{
-		String filename = path + name;
-		try {
-            File writeName = new File(filename); // 相对路径，如果没有则要建立一个新的output.txt文件
-            writeName.createNewFile(); // 创建新文件,有同名的文件的话直接覆盖
-            try (FileWriter writer = new FileWriter(writeName);
-                 BufferedWriter out = new BufferedWriter(writer)
-            ) {
-            	String[] temp = data.split(" ");// .号需要进行转义  加上右双斜杠
-            	for(int i=0;i<temp.length;i++)
-            	{
-            		out.write(temp[i]+"\r\n"); // \r\n即为换行
-            	}
-                
-                out.flush(); // 把缓存区内容压入文件
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-	private static void write_recent_name(String path,String data)
-	{
-		String filename = path + "pcm_record.txt";
-		try {
-            File writeName = new File(filename); // 相对路径，如果没有则要建立一个新的output.txt文件
-            writeName.createNewFile(); // 创建新文件,有同名的文件的话直接覆盖
-            try (FileWriter writer = new FileWriter(writeName);
-                 BufferedWriter out = new BufferedWriter(writer)
-            ) {
-                out.write(data+"\r\n"); // \r\n即为换行
-                out.flush(); // 把缓存区内容压入文件
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-		
-	
-	private static String get_recent_name(String path)
-	{
-		String result ="";
-		String filename = path + "pcm_record.txt";//记录最近转换完成的文件名
-		BufferedReader reader = null;
-        try {
 
-        	reader=new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
-            // 一次读入一行，直到读入null为文件结束
-            result = reader.readLine();
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
-		return result;
-	}
+
+
 
 }
