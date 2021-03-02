@@ -1,0 +1,6 @@
+1.https://www.waveshare.net/w/upload/e/e6/WM8960_Audio_Board_User_Manual_cn.pdf
+	涉及到采集wav格式到sd卡中
+2.https://s.taobao.com/search?q=vs1053&imgfile=&js=1&stats_click=search_radio_all%3A1&initiative_id=staobaoz_20210120&ie=utf8&sort=sale-desc
+	这个芯片应该能用来数据收集
+3.https://item.taobao.com/item.htm?spm=a230r.1.14.16.764d1622TCgl5t&id=557283114470&ns=1&abbucket=3#detail
+	这个和我的想法简直一样，看他用到的东西

@@ -1,0 +1,1 @@
+{"code":"0","data":{"ke":[{"score":"0.743","word":"音频"},{"score":"0.721","word":"录制"},{"score":"0.712","word":"文件"},{"score":"0.648","word":"进行"},{"score":"0.500","word":"134"}]},"desc":"success","sid":"ltp008b74e4@dx65e51370a84d1aba00"}

@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+F:\temp\final_desine\MCU_project\stc89C52\ADC_0832.uvproj
+Project File Date:  01/20/2021
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+MAIN.C(159): warning C291: not every exit path returns a value
+linking...
+Program Size: data=12.0 xdata=0 code=455
+creating hex file from "ADC_0832"...
+"ADC_0832" - 0 Error(s), 1 Warning(s).

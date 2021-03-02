@@ -1,0 +1,1 @@
+{"code":"0","data":{"ke":[{"score":"0.721","word":"录制"},{"score":"0.699","word":"测试"},{"score":"0.648","word":"进行"},{"score":"0.533","word":"最后"},{"score":"0.502","word":"一个"},{"score":"0.500","word":"153"}]},"desc":"success","sid":"ltp008b74f3@dx65e51370a8511aba00"}
