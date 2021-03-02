@@ -20,9 +20,11 @@ public class Voice_to_String {
 	static String mstr ="";
 	static String path ="";
 	static String fileName="test.pcm";//这里要将文件拷贝至根目录下，必须是.pcm文件
+	static int DELAYTIME = 1000;
+	static int BUFF_SIZE = 32 ;
 	int count=0;
 	//创建字节数组，长度为64K
-	byte[] data=new byte[32*1024];
+	byte[] data=new byte[BUFF_SIZE*1024];
 	int len=data.length;//此时为64*1024即有这么长
 	static boolean covertflag = false;
 	
@@ -38,6 +40,24 @@ public class Voice_to_String {
 		convert(APPID,"test.pcm",path);
 	}
 	
+	public static String convert_test(String appid,String filename,String path1,int delaytime,int fenpian)
+	{
+		fileName = filename;
+		path = path1;
+		BUFF_SIZE = fenpian;
+		DELAYTIME = delaytime;
+		SpeechUtility.createUtility( SpeechConstant.APPID +"=" +appid);
+		getVoiceObj().Recognize();
+		Thread.currentThread();
+		try {
+			Thread.sleep(DELAYTIME);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	//	DebugLog.Log("最终结果： "+mstr);
+		return mstr;
+	}
 	public static String convert(String appid,String filename,String path1)
 	{
 		
@@ -47,7 +67,7 @@ public class Voice_to_String {
 		getVoiceObj().Recognize();
 		Thread.currentThread();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(DELAYTIME);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,7 +107,7 @@ public class Voice_to_String {
 		FileInputStream fis=null;
 		
 		mstr ="";
-		byte[] data=new byte[32*1024];
+		byte[] data=new byte[BUFF_SIZE*1024];
 		int len=data.length;//此时为64*1024即有这么长
 
 		try {
@@ -116,7 +136,7 @@ public class Voice_to_String {
 					count++;
 					//DebugLog.Log(""+"  flag:  "+mIsEndOfSpeech+"number:  "+ count+" shuru  "+len);
 					Thread.currentThread();//等待是否出现一句话
-					Thread.sleep(1000);
+					Thread.sleep(DELAYTIME);
 					
 				}
 				count=0;
