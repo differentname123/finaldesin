@@ -1,2 +1,2 @@
-完成了pcm的接收与发送（都在服务端java测试的）
+完成了pcm的接收与发送（都在服务端java测试的）分别为：pcm_client.java  pcm_serve.java
 还差放在单片机上进行音频录制

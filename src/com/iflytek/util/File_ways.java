@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class File_ways {
 
 	
@@ -95,6 +97,47 @@ public class File_ways {
 		return result;
 		
 	}
+
+	public String get_string(String path,String filename)//一行一行读取指定文件，并以json格式存放，最后返回json转的string类型
+	{
+		JSONObject object = new JSONObject();
+		String result = "";
+		filename = path+"\\"+filename;
+		BufferedReader reader = null;
+        try {
+
+        	reader=new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
+            //System.out.println("以行为单位读取文件内容，一次读一整行：");
+            String tempString = null;
+            int line = 0;
+            // 一次读入一行，直到读入null为文件结束
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+            	if(tempString.length()!=0)//判断是否为空换行
+            	{
+                	object.put(""+line, tempString);
+                    //System.out.println("line " + line +"size: "+tempString.length()+ ": " + tempString);
+                    line++;
+            	}
+
+            }
+            reader.close();
+            object.put("linecount", line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+        result = object.toString();
+		return result;
+		
+	}
+	
 	public String get_recent_name(String path,String Filename)//读取指定路径下文件的第一行内容
 	{
 		String result ="";

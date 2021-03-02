@@ -39,7 +39,7 @@ public class total_voice_tostring {
 	static boolean judge_zhuanhuan(String recentname)//判断是否这个文件以经是最新文件
 	{
 		boolean flag = false;
-		String str_re;
+		String str_re,str_re1;
 		
 		
 		int nowtime = Integer.parseInt(recentname);
@@ -55,7 +55,13 @@ public class total_voice_tostring {
 				flag =true;
 				System.out.println(x+" 开始从pcm转换为String");
 				str_re = Voice_to_String.convert(APPID, fileNameLists[i],PCMDATA_PATH);
-				System.out.println(x+" 转换结果" + str_re);
+				System.out.println(x+" 第一次转换结果" + str_re);
+				str_re1 = Voice_to_String.convert(APPID, fileNameLists[i],PCMDATA_PATH);//多加一次识别增加准确性
+				if(str_re.length()<str_re1.length())
+				{
+					str_re = str_re1;
+				}
+				System.out.println(x+" 最终转换结果" + str_re);
 				file_ways.write_recent_name(RECENT_PATH,""+x,PCMDATA_JILU);//该进行记录的回写
 				file_ways.write_string(STRDATA_PATH,str_re,x+".txt");
 				nowtime = x;

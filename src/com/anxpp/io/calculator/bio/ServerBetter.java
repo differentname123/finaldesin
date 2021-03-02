@@ -4,6 +4,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import com.iflytek.util.get_recent_top_words;
 /**
  * BIO服务端源码__伪异步I/O
  * @author yangtao__anxpp.com
@@ -29,6 +31,10 @@ public final class ServerBetter {
 			//如果端口合法且空闲，服务端就监听成功
 			server = new ServerSocket(port);
 			System.out.println("服务器已启动，端口号：" + port);
+			String curTime = System.currentTimeMillis() / 1000L + "";
+			int endtime = Integer.parseInt(curTime);
+			
+			get_recent_top_words.get_top_words(endtime, 4);
 			Socket socket;
 			//通过无线循环监听客户端连接
 			//如果没有客户端接入，将阻塞在accept操作上。

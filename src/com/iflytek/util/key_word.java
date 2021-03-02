@@ -41,6 +41,8 @@ public class key_word {
 	private static final String celue1path = "./celue1";
 	private static final String celue2path = "./celue2";
 	
+	File_ways file_ways = new File_ways();//声明一个文件处理对象
+	
 	public static void main(String[] args) throws IOException {
 		System.out.println(TEXT.length());
 		Map<String, String> header = buildHttpHeader();
@@ -48,44 +50,7 @@ public class key_word {
 		System.out.println("itp 接口调用结果：" + result);
 		
 	}
-	public String get_string(String filename)
-	{
-		JSONObject object = new JSONObject();
-		String result = "";
-		BufferedReader reader = null;
-        try {
 
-        	reader=new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
-            //System.out.println("以行为单位读取文件内容，一次读一整行：");
-            String tempString = null;
-            int line = 0;
-            // 一次读入一行，直到读入null为文件结束
-            while ((tempString = reader.readLine()) != null) {
-                // 显示行号
-            	if(tempString.length()!=0)//判断是否为空换行
-            	{
-                	object.put(""+line, tempString);
-                    //System.out.println("line " + line +"size: "+tempString.length()+ ": " + tempString);
-                    line++;
-            	}
-
-            }
-            reader.close();
-            object.put("linecount", line);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
-        result = object.toString();
-		return result;
-		
-	}
 	
 	//进行关键字的提取和策略一的进行
 	public String get_keyword(String filename,String appid,String api_key,String path,String savefilename,String savepath) throws UnsupportedEncodingException
@@ -94,7 +59,7 @@ public class key_word {
 		int i;
 		total_strdeal strdeal =new total_strdeal();
 		
-		File_ways file_ways = new File_ways();
+		
 		
 		JSONObject jsonobject = new JSONObject();
 		JSONObject rejsonobject = new JSONObject();
@@ -102,7 +67,7 @@ public class key_word {
 		String redata;
 		int linecount;
 		String result= "";
-		text =get_string(path+"\\"+filename);
+		text =file_ways.get_string(path,filename);
 		jsonobject = JSON.parseObject(text);
 		linecount = jsonobject.getIntValue("linecount");
 		Map<String, String> header = buildHttpHeader();
@@ -111,7 +76,7 @@ public class key_word {
 		
 		for(i=0;i<linecount;i++)
 		{
-			System.out.println("开始对celue1");
+			System.out.println("开始进行策略1");
 			String future = strdeal.Judge1(jsonobject.getString(""+i));
 			String curTime = System.currentTimeMillis() / 1000L + "";
 			int Timename = Integer.parseInt(curTime);
@@ -121,7 +86,7 @@ public class key_word {
 				System.out.println(future+ "识别成功");
 				file_ways.write_data(celue1path,future,Timename+".txt");
 			}
-			System.out.println("开始对celue2");
+			System.out.println("开始进行策略2");
 			//进行策略二的实现
 			String result11 = strdeal.sa(jsonobject.getString(""+i));;
 			JSONObject saobject = new JSONObject();
@@ -138,7 +103,7 @@ public class key_word {
 			
 			
 			
-			System.out.println("开始对进行关键字提取");
+			System.out.println("开始进行关键字提取");
 			//进行关键词的提取和存储
 			result = HttpUtil.doPost1(WEBTTS_URL, header, "text=" + URLEncoder.encode(jsonobject.getString(""+i), "utf-8"))+" ";
 			System.out.println("提取结果为"+ result);
