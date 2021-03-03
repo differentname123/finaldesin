@@ -34,7 +34,7 @@ public final class ServerBetter {
 			String curTime = System.currentTimeMillis() / 1000L + "";
 			int endtime = Integer.parseInt(curTime);
 			
-			get_recent_top_words.get_top_words(endtime, 4);
+			//get_recent_top_words.get_top_words(endtime, 4);
 			Socket socket;
 			//通过无线循环监听客户端连接
 			//如果没有客户端接入，将阻塞在accept操作上。

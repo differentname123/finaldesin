@@ -16,7 +16,7 @@ public class Test {
 	private static ExecutorService executorService = Executors.newFixedThreadPool(60);
 	public static void main(String[] args) throws InterruptedException {
 		//运行服务器
-		new Thread(new Runnable() { //文件接收线程
+		new Thread(new Runnable() { //通信 文件接收线程
 			@Override
 			public void run() {
 				try {

@@ -51,6 +51,8 @@ public class pcm_serve {
                 	da.write(bytes);
                     ret += bytesToHexString(bytes) + " ";
                 }
+                
+                
                 doSomething(ret);
                 System.out.println("接收完成：" + socket.getRemoteSocketAddress());
             } catch (IOException e) {

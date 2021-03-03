@@ -5,12 +5,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import com.alibaba.fastjson.JSON;
 import com.iflytek.util.Voice_to_String;
+import com.iflytek.util.deal_quest;
 import com.iflytek.util.key_word;
+
 
 
 public class ServerHandler implements Runnable{
 	private Socket socket;
+	deal_quest deal = new deal_quest();
 	public ServerHandler(Socket socket) {
 		this.socket = socket;
 	}
@@ -25,18 +32,15 @@ public class ServerHandler implements Runnable{
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new PrintWriter(socket.getOutputStream(),true);
 			String expression;
-			while(true){
-				if((expression = in.readLine())==null) break;
+			
+				expression = in.readLine();
 				
 				System.out.println("收到的信息为" + expression);
+				JSONObject quest = new JSONObject();
+				quest = JSON.parseObject(expression);
+				deal_quest.deal(quest, socket);
 				//完成文件接收
-
-				//进行转文字操作
-
-				//提取关键字
-				key_word kword=new key_word();
-				//System.out.println("测试结果"+kword.get_keyword("aa.txt", appid, api_key));
-			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
