@@ -77,6 +77,7 @@ public class get_recent_top_words {
             }
 
         });
+        
        i=0;
         for(Map.Entry<String,Double> mapping:list){   //进行元素访问
                if(i<k)

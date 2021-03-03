@@ -80,7 +80,7 @@ public class android {
 			e.printStackTrace();
 		}
 	}
-	public static void get_xinqing(int time)
+	public static void get_xinqing(int time)//获取指定时间段内的心情值
 	{
 		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
 		String quest = produce_order("211","123",time,0);
@@ -93,20 +93,57 @@ public class android {
 			e.printStackTrace();
 		}
 	}
+	public static void get_report(int time)//获取指定时间段内的数据分析结果
+	{
+		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
+		String quest = produce_order("213","123",time,0);
+		send_str(socket,quest);
+		System.out.println("终端分析数据接收结果："+recive_str(socket));
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void get_future(int time)//获取指定时间段内的捕捉到的事情
+	{
+		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
+		String quest = produce_order("212","123",time,0);
+		send_str(socket,quest);
+		System.out.println("终端捕捉值接收结果："+recive_str(socket));
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public static void main(String[] args) {
 		
-		/*  终端向云端访问关键词用例
+		/*  //终端向云端访问关键词用例
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		int Timename = Integer.parseInt(curTime);
 		get_topk(Timename,3);
 		*/
 		
-		// 终端向云端访问心情值用例
+		/* // 终端向云端访问心情值用例
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		int Timename = Integer.parseInt(curTime);
 		get_xinqing(Timename);
+		*/
 		
+		/* // 终端向云端访问捕捉值用例
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int Timename = Integer.parseInt(curTime);
+		get_future(Timename);
+		*/
+		
+			//获取指定时间段内的数据分析结果用例
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int Timename = Integer.parseInt(curTime);
+		get_report(Timename);
 
 	}
 

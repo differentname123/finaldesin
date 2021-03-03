@@ -76,7 +76,9 @@ public class key_word {
 		
 		for(i=0;i<linecount;i++)
 		{
-			System.out.println("开始进行策略1");
+			
+			//实时心情分析
+			System.out.println("开始进行事件捕捉");
 			String future = strdeal.Judge1(jsonobject.getString(""+i));
 			String curTime = System.currentTimeMillis() / 1000L + "";
 			int Timename = Integer.parseInt(curTime);
@@ -86,7 +88,7 @@ public class key_word {
 				System.out.println(future+ "识别成功");
 				file_ways.write_data(celue1path,future,Timename+".txt");
 			}
-			System.out.println("开始进行策略2");
+			System.out.println("开始进行策略2情感分析");
 			//进行策略二的实现
 			String result11 = strdeal.sa(jsonobject.getString(""+i));;
 			JSONObject saobject = new JSONObject();

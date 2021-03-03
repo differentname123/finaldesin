@@ -28,7 +28,15 @@ public class deal_quest {
 			{
 				sandr.return_xinqing(time,socket);
 			}
+			if(order.equals("212"))
+			{
+				sandr.return_future(time,socket);
+			}
 			
+			if(order.equals("213"))
+			{
+				sandr.return_report(time,socket);
+			}
 			
 		}
 		if(from==1)

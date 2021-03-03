@@ -30,9 +30,21 @@ public class send_recive {
 		send_str(socket,jsonobject.toString());
 		
 	}
-	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送关键字
+	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送心情值
 	{
 		String result = get_recent_xinqing.get_xinqing(time);
+		send_str(socket,result);
+		
+	}
+	public static void return_future(int time,Socket socket)//向终端以json格式发送捕捉值
+	{
+		String result = get_recent_future.get_future(time);
+		send_str(socket,result);
+		
+	}
+	public static void return_report(int time,Socket socket)//向终端以json格式发送捕捉值
+	{
+		String result = today_report.fenxi(time);
 		send_str(socket,result);
 		
 	}
