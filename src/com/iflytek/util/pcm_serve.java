@@ -140,6 +140,6 @@ public class pcm_serve {
 
     public static void main(String[] args) {
         pcm_serve server = new pcm_serve();
-        server.pcmsave("C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\test\\","153.pcm");
+        server.pcmsave("C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\test\\","111.txt");
     }
 }

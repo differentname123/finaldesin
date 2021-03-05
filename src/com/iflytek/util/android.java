@@ -122,11 +122,11 @@ public class android {
 	
 	public static void main(String[] args) {
 		
-		/*  //终端向云端访问关键词用例
+		  //终端向云端访问关键词用例
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		int Timename = Integer.parseInt(curTime);
 		get_topk(Timename,3);
-		*/
+		
 		
 		/* // 终端向云端访问心情值用例
 		String curTime = System.currentTimeMillis() / 1000L + "";
@@ -140,11 +140,12 @@ public class android {
 		get_future(Timename);
 		*/
 		
-			//获取指定时间段内的数据分析结果用例
+		/*
+		//获取指定时间段内的数据分析结果用例
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		int Timename = Integer.parseInt(curTime);
 		get_report(Timename);
-
+		*/
 	}
 
 }
