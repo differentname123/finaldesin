@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,11 +10,27 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical" >
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart1"
+        <FrameLayout
+            android:id="@+id/FrameLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:foregroundGravity="right|bottom">
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/nice_spinner"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|right"
+                android:layout_margin="16dp" />
+        </FrameLayout>
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

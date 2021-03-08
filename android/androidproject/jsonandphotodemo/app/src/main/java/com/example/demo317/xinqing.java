@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -24,11 +28,16 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
+
+import org.angmarch.views.NiceSpinner;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -49,7 +58,7 @@ public class xinqing extends DemoBase implements
     private LineChart chart;
     private ExecutorService mThreadPool;
     TongXing tongxing = new TongXing();//声明通信的对象
-
+    List<String> dataset ;
     Button addone,addbyself,xinqingother;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,54 @@ public class xinqing extends DemoBase implements
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_xinqing);
+
+        NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+        dataset = new LinkedList<>(Arrays.asList("日视图", "周视图", "月视图"));
+        niceSpinner.attachDataSource(dataset);
+        niceSpinner.setTextSize(10);
+        niceSpinner.setBackgroundColor(Color.rgb(255, 242, 226));
+        niceSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                switch(i)
+                {
+                    case 0:
+                        mThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                chart.clearValues();
+                                huayitian();
+                                Log.d("xinqing","功能待添加");
+                            }
+                        });
+                        break;
+                    case 1:
+                        mThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                chart.clearValues();
+                                huayizhou();
+                                Log.d("xinqing","功能待添加");
+                            }
+                        });
+                        break;
+
+                    case 2:
+                        mThreadPool.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                chart.clearValues();
+                                huayiyue();
+                                Log.d("xinqing","功能待添加");
+                            }
+                        });
+                        break;
+                }
+
+            }
+        });
+
 
         //setTitle("RealtimeLineChartActivity");
         chart = findViewById(R.id.chart1);
@@ -80,6 +137,10 @@ public class xinqing extends DemoBase implements
 
         // set an alternative background color
         chart.setBackgroundColor(Color.rgb(255, 242, 226));//设置背景颜色
+        //描述文字的操作
+        Description de = new Description();
+        de.setText("情绪状态图");
+        chart.setDescription(de);
 
         LineData data = new LineData();
             data.setValueTextColor(Color.BLACK);
@@ -104,6 +165,7 @@ public class xinqing extends DemoBase implements
         xl.setTextSize(15f);
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
+
 
         YAxis leftAxis = chart.getAxisLeft();
        // leftAxis.setTypeface(tfLight);
@@ -235,6 +297,82 @@ public class xinqing extends DemoBase implements
         JSONObject tempjson = new JSONObject();
         JSONObject js =JSONObject.fromObject(result); //string转json格式
         linecount = js.getInt("linecount");
+        if(linecount == 0)
+        {
+            Looper.prepare();
+            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Looper.loop();
+        }
+        Log.d("xinqing",linecount+"");
+        for(int i = 0;i<linecount;i++)
+        {
+            String temp = js.getString(""+i);
+            JSONObject jstemp =JSONObject.fromObject(temp); //string转json格式
+            String zhi = jstemp.getString("zhi");
+            float xinqingzhi ;
+            xinqingzhi = covert(Integer.parseInt(zhi),beforzhi,xishu);
+            beforzhi = xinqingzhi;
+            addzhi(xinqingzhi);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    private void huayitian()//绘制一天的情绪图
+    {
+        int timecount = 1*24*60*60;
+        float xishu = 2,beforzhi = 50;
+        String result = "";
+        result = tongxing.get_xinqing(timecount);
+        Log.d("xinqing",result);
+        int linecount;
+        JSONObject tempjson = new JSONObject();
+        JSONObject js =JSONObject.fromObject(result); //string转json格式
+        linecount = js.getInt("linecount");
+        if(linecount == 0)
+        {
+            Looper.prepare();
+            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Looper.loop();
+        }
+        Log.d("xinqing",linecount+"");
+        for(int i = 0;i<linecount;i++)
+        {
+            String temp = js.getString(""+i);
+            JSONObject jstemp =JSONObject.fromObject(temp); //string转json格式
+            String zhi = jstemp.getString("zhi");
+            float xinqingzhi ;
+            xinqingzhi = covert(Integer.parseInt(zhi),beforzhi,xishu);
+            beforzhi = xinqingzhi;
+            addzhi(xinqingzhi);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    private void huayiyue()//绘制一个月的情绪图
+    {
+        int timecount = 30*24*60*60;
+        float xishu = 2,beforzhi = 50;
+        String result = "";
+        result = tongxing.get_xinqing(timecount);
+        Log.d("xinqing",result);
+        int linecount;
+        JSONObject tempjson = new JSONObject();
+        JSONObject js =JSONObject.fromObject(result); //string转json格式
+        linecount = js.getInt("linecount");
+        if(linecount == 0)
+        {
+            Looper.prepare();
+            Toast.makeText(getApplicationContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Looper.loop();
+        }
         Log.d("xinqing",linecount+"");
         for(int i = 0;i<linecount;i++)
         {
