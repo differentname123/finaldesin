@@ -14,7 +14,22 @@ import java.io.OutputStream;
 import com.alibaba.fastjson.JSONObject;
 
 public class File_ways {
+	
+	public void creat_path(String path)//创建一个文件夹，如果存在就忽略
+	{
+		File folder = new File(path);
+		if (!folder.exists()) {
 
+		    folder.mkdirs();
+
+		    System.out.println("创建文件夹");
+
+		} else {
+
+		    System.out.println("文件夹已存在");
+
+		}
+	}
 	public void write_string(String path,String data,String name)//往指定文件覆盖的写入数据
 	{
 		String filename = path +"\\" + name;

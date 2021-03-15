@@ -1,6 +1,11 @@
 package com.iflytek.util;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -41,6 +46,48 @@ public class android {
 		}
 		return expression;
 	}
+	
+    public static int recive_photo(String path,String filename,Socket socket) {
+      
+        while (true) {
+            try {
+
+                BufferedInputStream bis = new BufferedInputStream(
+                        socket.getInputStream());
+
+                DataInputStream dis = new DataInputStream(bis);//用于读取客户端发来的pcm数据
+                byte[] bytes = new byte[1]; // 一次读取一个byte
+                String ret = "";
+        		File file = new File(path+filename);
+        		if(file.exists())
+        		{
+        			file.delete();
+        		}// 创建新文件,有同名的文件的话直接覆盖
+        		file.createNewFile();
+        		
+        		
+        		
+                FileOutputStream fs =new FileOutputStream(path+filename);
+                DataOutputStream da = new DataOutputStream(fs);//用于写入收到的pcm数据
+                
+                while (dis.read(bytes) != -1) {
+                	da.write(bytes);
+                }
+              
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                return 0;
+            } finally {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    return 0;
+                }
+            }
+        }
+
+    }
 	public static void send_str(Socket socket,String data)
 	{
 		PrintWriter out = null;
@@ -66,6 +113,19 @@ public class android {
 			e.printStackTrace();
 		}
 		return socket;
+	}
+	public static void get_word_cloud(int time)//获取指定时间段内的前k个关键词
+	{
+		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
+		String quest = produce_order("214","123",time,100);
+		send_str(socket,quest);
+		recive_photo("S:\\","areyou.png",socket);
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static void get_topk(int time,int k)//获取指定时间段内的前k个关键词
 	{
@@ -123,9 +183,11 @@ public class android {
 	public static void main(String[] args) {
 		
 		  //终端向云端访问关键词用例
+		/*
 		String curTime = System.currentTimeMillis() / 1000L + "";
 		int Timename = Integer.parseInt(curTime);
 		get_topk(Timename,3);
+		*/
 		
 		
 		/* // 终端向云端访问心情值用例
@@ -146,6 +208,10 @@ public class android {
 		int Timename = Integer.parseInt(curTime);
 		get_report(Timename);
 		*/
+		//获取指定时间段内的词云图
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int Timename = Integer.parseInt(curTime);
+		get_word_cloud(Timename);
 	}
 
 }

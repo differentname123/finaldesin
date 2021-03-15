@@ -1,5 +1,9 @@
 package com.iflytek.util;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -12,8 +16,27 @@ import com.alibaba.fastjson.JSONObject;
 
 public class send_recive {
 
-	
-	
+	private static final String WORD_CLOUD_SAVEPATH = "./word_cloud_data";
+	public static void send_photo(String filename,Socket socket)//想客户端发送filename的图片
+	{
+        try {
+
+            //使用DataInputStream封装输入流
+        	FileInputStream fis = new FileInputStream(filename);
+            InputStream os = new DataInputStream(fis);//用于读出待发送的文件
+            
+            byte [] b = new byte[1];
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream()); //用于发送给客户端
+            while (-1 != os.read(b)) {
+                dos.write(b); // 发送给客户端
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+ 
+        }
+	}
 	public static void return_keyword(int time,int k,Socket socket)//向终端以降序json格式发送关键字
 	{
 		Map<String, Double> hashMap = get_recent_top_words.get_top_words(time, k);
@@ -28,6 +51,12 @@ public class send_recive {
 	        }
 		System.out.println(jsonobject);
 		send_str(socket,jsonobject.toString());
+		
+	}
+	public static void return_word_cloud(int time,Socket socket)//向终端以图片形式发送词云
+	{
+		String result = word_cloud.word_cloud_produce(time);
+		send_photo(WORD_CLOUD_SAVEPATH+"\\"+result,socket);
 		
 	}
 	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送心情值

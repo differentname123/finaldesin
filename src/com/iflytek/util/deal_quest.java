@@ -37,6 +37,10 @@ public class deal_quest {
 			{
 				sandr.return_report(time,socket);
 			}
+			if(order.equals("214"))
+			{
+				sandr.return_word_cloud(time,socket);
+			}
 			
 		}
 		if(from==1)
