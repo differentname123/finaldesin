@@ -86,7 +86,7 @@ public class again {
 	        wordCloud.setBackground(new CircleBackground(255));
 
 	        wordCloud.build(wordFrequencies);
-	        wordCloud.writeToFile("s://6.png");
+	        wordCloud.writeToFile("s://7.png");
 	    }
 
 }

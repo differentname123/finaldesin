@@ -6,8 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/kumo-api-1.17.jar"/>
-	<classpathentry kind="lib" path="lib/kumo-core-1.17.jar"/>
 	<classpathentry kind="lib" path="lib/kumo-tokenizers-1.17.jar"/>
 	<classpathentry kind="lib" path="lib/language-en-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/languagetool-core-2.5.jar"/>
@@ -34,5 +32,8 @@
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j.jar"/>
+	<classpathentry kind="lib" path="lib/kumo-core-1.17-sources.jar"/>
+	<classpathentry kind="lib" path="lib/kumo-api-1.17.jar"/>
+	<classpathentry kind="lib" path="lib/kumo-core-1.17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
