@@ -11,3 +11,7 @@
 	最长的句子
 	总词语数
 	说得最多的词语
+
+词云：
+	build_word_cloud(List wordFrequencies,int chang,int kuan,String backstyle)
+		参数说明：传入关键词及其频率（list格式），在传入图片分辨率，chang和kuan，最后以backstyle所指向的图片作为形状
