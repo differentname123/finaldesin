@@ -1,7 +1,17 @@
 package com.iflytek.util;
 
 import java.awt.Color;
+
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
+
 import java.util.Map.Entry;
 
 import com.alibaba.fastjson.JSONObject;
@@ -88,13 +101,45 @@ public class word_cloud {
         wordCloud.setFontScalar(new LinearFontScalar((int) (0.7*size), (int) (1.3*size)));//设置字体大小范围
         wordCloud.build(wordFrequencies);
         wordCloud.writeToFile(WORD_CLOUD_SAVEPATH+"\\"+savename);
+        pngtojpg(savename);
         System.out.println("词数: "+wordFrequencies.size()+"  填充面积: "+s+"  字体大小: "+size);
+	}
+	public static void pngtojpg(String filename)//将词云目录下的filename图片转为jpg格式
+	{
+		 BufferedImage bufferedImage;
+		 
+		    try {
+		 
+		      //read image file
+		      bufferedImage = ImageIO.read(new File(WORD_CLOUD_SAVEPATH+"\\"+filename));
+		      String temp[] = filename.split("\\.");
+		     // System.out.println(filename+temp);
+		      // create a blank, RGB, same width and height, and a white background
+		      BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(),
+		            bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+		 
+		     //TYPE_INT_RGB:创建一个RBG图像，24位深度，成功将32位图转化成24位
+		 
+		      newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+		 
+		      // write to jpeg file
+		      ImageIO.write(newBufferedImage, "jpg", new File(WORD_CLOUD_SAVEPATH+"\\"+temp[0]+".jpg"));
+		 
+		      System.out.println("Done");
+		 
+		    } catch (IOException e) {
+		 
+		      e.printStackTrace();
+		 
+		    }
+		 
+
 	}
 	public static String word_cloud_produce(int time)//生成time时间内的词云，并返回词云图片名字
 	{
 		String curTime = System.currentTimeMillis() / 1000L + "";
         build_cloud(time,100,BACKGROUND_PATH+"\\"+HEART_STYLE,curTime+".png");
-        return curTime+".png";
+        return curTime+".jpg";
 	}
 	public static void main(String[] args) throws IOException {
 		/*

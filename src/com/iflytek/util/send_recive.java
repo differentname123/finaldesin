@@ -17,6 +17,28 @@ import com.alibaba.fastjson.JSONObject;
 public class send_recive {
 
 	private static final String WORD_CLOUD_SAVEPATH = "./word_cloud_data";
+	
+	public static void photo_send(String str,Socket socket){
+		//发送图片
+		DataOutputStream dos;
+		try {
+			dos = new DataOutputStream(socket.getOutputStream());
+			FileInputStream fis = new FileInputStream(str);
+	        int size = fis.available();
+			System.out.println("size = " + size);
+	        byte[] data = new byte[size];
+	        fis.read(data);
+	        System.out.println("size = " + data.toString());
+	        dos.writeInt(size);
+	        dos.write(data);
+	        dos.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		
+	}
 	public static void send_photo(String filename,Socket socket)//想客户端发送filename的图片
 	{
         try {
@@ -56,7 +78,8 @@ public class send_recive {
 	public static void return_word_cloud(int time,Socket socket)//向终端以图片形式发送词云
 	{
 		String result = word_cloud.word_cloud_produce(time);
-		send_photo(WORD_CLOUD_SAVEPATH+"\\"+result,socket);
+		photo_send(WORD_CLOUD_SAVEPATH+"\\"+result,socket);
+		//photo_send("./word_cloud_data\\1615965939.jpg",socket);
 		
 	}
 	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送心情值
