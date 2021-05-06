@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;com.iflytek.util&apos; to &apos;MscInvisibleJavaDemo/src&apos;&#x0D;&#x0A;- Original project: &apos;MscDemo&apos;&#x0D;&#x0A;- Destination element: &apos;MscInvisibleJavaDemo/src&apos;&#x0D;&#x0A;- Original element: &apos;MscDemo/src/com.iflytek.util&apos;" description="Copy package" destination="=MscInvisibleJavaDemo/src" element1="/src&lt;com.iflytek.util" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1610859282736" version="1.0"/>
+</session>

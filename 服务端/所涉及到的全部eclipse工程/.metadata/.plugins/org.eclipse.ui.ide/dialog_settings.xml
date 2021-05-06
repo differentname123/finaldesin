@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="F:\download\chrome_download\littlemouth-master\server45"/>
+			<item value="C:\Users\24349\eclipse-workspace\word_cloud"/>
+			<item value="F:\download\chrome_download\WordCram-main"/>
+			<item value="F:\download\chrome_download\AHANLP-master"/>
+			<item value="C:\Users\24349\eclipse-workspace\voice_serve1.0"/>
+			<item value="F:\download\chrome_download\ltp_java_demo (6)"/>
+			<item value="F:\download\chrome_download\ltp_java_demo (5)"/>
+			<item value="F:\download\chrome_download\ltp_java_demo (3)\giao"/>
+			<item value="F:\download\chrome_download\littlemouth-master\server45(服务器图片json分别发送)"/>
+			<item value="F:\download\chrome_download\Java-IO-master"/>
+			<item value="F:\BaiduNetdiskDownload\hsiaohuchu20201009\java"/>
+			<item value="F:\BaiduNetdiskDownload\hsiaohuchu20201009\java\Project\server3.15"/>
+			<item value="F:\download\chrome_download\ltp_java_demo\ltp_java_demo\ltp"/>
+			<item value="F:\download\chrome_download\Java_iat1021_5fed5ca2 (1)\sample\MscInvisibleDemo"/>
+			<item value="F:\download\chrome_download\Java_iat1021_5fed5ca2\sample\MscDemo"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="CleanDialogSettings">
+		<item key="TOGGLE_SELECTED" value="false"/>
+		<item key="DIALOG_WIDTH" value="581"/>
+		<item key="DIALOG_HEIGHT" value="434"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
+	</section>
+	<section name="NewWizardAction">
+		<item key="NewWizardSelectionPage.STORE_SELECTED_ID" value="org.eclipse.jdt.ui.wizards.JavaProjectWizard"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.ui.Basic"/>
+			<item value="org.eclipse.jdt.ui.java"/>
+			<item value="org.eclipse.m2e"/>
+		</list>
+	</section>
+	<section name="BasicNewProjectResourceWizard">
+	</section>
+</section>

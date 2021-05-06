@@ -1,0 +1,23 @@
+package com.iflytek.util;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+public class get_recent_top_words {
+
+	public JSONObject get_top_words(int time,int k)
+	{
+		JSONObject object = new JSONObject();
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int endtime = Integer.parseInt(curTime);
+		int starttime = endtime - time;
+		
+		
+		return object;
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

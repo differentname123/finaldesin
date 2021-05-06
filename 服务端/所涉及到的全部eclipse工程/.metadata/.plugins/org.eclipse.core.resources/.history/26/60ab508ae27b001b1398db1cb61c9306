@@ -1,0 +1,68 @@
+package com.iflytek.util;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+public class today_report {
+	static String STRDATA_PATH = "./stringdata";//存储string字符串文件的路径
+	static File_ways file_ways = new File_ways();//声明一个文件处理对象
+	static total_strdeal strdeal = new total_strdeal();//声明一个字符串处理对象
+	public static String fenxi(int time)
+	{
+		String result = "";
+		int count = 0;
+		Map<String, Integer> maps = new HashMap<>();
+		JSONObject resultjsonobject = new JSONObject();
+		int j,k;
+		Set<String> hs = new HashSet<String>();
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		JSONObject jsonobject = new JSONObject();
+		int endtime = Integer.parseInt(curTime);
+		int starttime = endtime - time;
+	    File file = new File(STRDATA_PATH);
+	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
+	    
+		for(int i = 0; i < fileNameLists.length; i ++){
+			String[] temp = fileNameLists[i].split("\\.");// .号需要进行转义  加上右双斜杠
+			int x= Integer.parseInt(temp[0]);//  提取到不含后缀的文件名对应的整数
+			//System.out.println(nowtime + "读取文件顺序" + x);
+			if(starttime <= x)
+			{
+				String luostr = file_ways.get_string(STRDATA_PATH,x+".txt");
+				
+				resultjsonobject = JSON.parseObject(luostr);
+				count = resultjsonobject.getIntValue("linecount");
+				for(j = 0; j<count; j++)
+				{
+					String linestr = resultjsonobject.getString(""+j);
+					String cws[] = strdeal.cws(linestr);//进行中文分词
+					String pos[] = strdeal.pos(linestr);//进行词性识别
+					for(k = 0; k<pos.length; k++)
+					{
+						if(maps.containsKey(pos[k]))
+						{
+							maps.replace(pos[k], maps.get(pos[k])+1);
+						}
+						else
+						{
+							maps.put(pos[k], 1);
+						}
+					}
+				}
+				
+			}
+		}
+		return result;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

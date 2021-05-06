@@ -1,0 +1,83 @@
+package com.iflytek.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import com.alibaba.fastjson.JSONObject;
+
+public class android {
+	private static int DEFAULT_SERVER_PORT = 12345;
+	private static String DEFAULT_SERVER_IP = "127.0.0.1";
+	public static String produce_order(String order,String ID,int time, int k)//生成指定请求帧
+	{
+		JSONObject jsonobject = new JSONObject();
+		jsonobject.put("from", 0);
+		jsonobject.put("ID", ID);
+		jsonobject.put("order", order);
+		jsonobject.put("time", time);
+		jsonobject.put("k", k);
+		return jsonobject.toString();
+	}
+	public static String recive_str(Socket socket)
+	{
+		String expression = null;
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			expression = in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return expression;
+	}
+	public static void send_str(Socket socket,String data)
+	{
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(socket.getOutputStream(),true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.println(data);
+		
+		if(out != null){
+			out.close();
+			out = null;
+		}
+	}
+	public static Socket build_link(String ip,int port) //和指定ip端口建立连接，并且返回套接字
+	{
+		Socket socket = null;
+		try {
+			socket = new Socket(ip,port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return socket;
+	}
+	public static void get_topk(int time,int k)
+	{
+		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
+		String quest = produce_order("210","123",time,k);
+		send_str(socket,quest);
+		System.out.println("终端关键词接收结果："+recive_str(socket));
+		
+	}
+	public static void main(String[] args) {
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int Timename = Integer.parseInt(curTime);
+		get_topk(Timename,3);
+
+	}
+
+}

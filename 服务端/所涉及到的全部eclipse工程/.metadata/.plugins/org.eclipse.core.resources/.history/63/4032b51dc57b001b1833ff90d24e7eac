@@ -1,0 +1,56 @@
+package com.iflytek.util;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import com.alibaba.fastjson.JSONObject;
+
+public class android {
+	public static String produce_order(String order,String ID,int time, int k)//生成指定请求帧
+	{
+		JSONObject jsonobject = new JSONObject();
+		jsonobject.put("from", 0);
+		jsonobject.put("ID", ID);
+		jsonobject.put("order", order);
+		jsonobject.put("time", time);
+		jsonobject.put("k", k);
+		return jsonobject.toString();
+	}
+	public static void send_str(Socket socket,String data)
+	{
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(socket.getOutputStream(),true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		out.println(data);
+		
+		if(out != null){
+			out.close();
+			out = null;
+		}
+	}
+	public static Socket build_link(String ip,int port) //和指定ip端口建立连接，并且返回套接字
+	{
+		Socket socket = null;
+		try {
+			socket = new Socket(ip,port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return socket;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,48 @@
+package com.iflytek.util;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+public class TreeMapTest {
+public static void main(String[] args) {
+Map map = new TreeMap(
+
+new Comparator() {
+public int compare(String obj1, String obj2) {
+// 降序排序
+
+return obj2.compareTo(obj1);
+
+}
+
+});
+
+map.put("c", "ccccc");
+
+map.put("a", "aaaaa");
+
+map.put("b", "bbbbb");
+
+map.put("d", "ddddd");
+
+Set keySet = map.keySet();
+
+Iterator iter = (Iterator) keySet.iterator();
+
+while (iter.next()) {
+String key = iter.next();
+
+System.out.println(key + ":" + map.get(key));
+
+}
+
+}
+
+}
+————————————————
+版权声明：本文为CSDN博主「刘新征」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_29198045/article/details/114158127

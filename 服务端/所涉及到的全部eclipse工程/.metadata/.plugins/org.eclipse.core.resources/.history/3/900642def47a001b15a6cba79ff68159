@@ -1,0 +1,10 @@
+package com.iflytek.util;
+
+public class get_recent_top_words {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

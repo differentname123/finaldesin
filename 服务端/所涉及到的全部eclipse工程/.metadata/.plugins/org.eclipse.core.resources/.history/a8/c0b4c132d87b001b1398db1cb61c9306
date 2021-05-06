@@ -1,0 +1,17 @@
+package com.iflytek.util;
+
+public class get_recent_future {
+	private static final String celue1path = "./celue1";
+	File_ways file_ways = new File_ways();//声明一个文件处理对象
+	public static String get_future(int time)
+	{
+		String result = "";
+		
+		return result;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

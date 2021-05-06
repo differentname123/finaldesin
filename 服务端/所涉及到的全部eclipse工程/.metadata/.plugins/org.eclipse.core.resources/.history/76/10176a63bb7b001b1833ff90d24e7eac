@@ -1,0 +1,27 @@
+package com.iflytek.util;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class send_recive {
+
+	public Socket build_link(String ip,int port) //和指定ip端口建立连接，并且返回套接字
+	{
+		Socket socket = null;
+		try {
+			socket = new Socket(ip,port);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return socket;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

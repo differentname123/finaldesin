@@ -1,0 +1,94 @@
+package com.iflytek.util;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+
+
+
+public class get_recent_top_words {
+
+	static String KEYDATA_PATH = "./keydata";//存储string字符串文件的路径
+	static File_ways file_ways = new File_ways();//声明一个文件处理对象
+	
+	public static String sortmap(Map<String, Double> map)
+	{
+		String result = "";
+		for(Entry<String, Double> entry : map.entrySet())
+		{	
+			String mapKey = entry.getKey();
+			Double mapValue = entry.getValue();
+			System.out.println(mapKey+":"+mapValue);
+		}
+		return result;
+	}
+	public static JSONObject get_top_words(int time,int k)
+	{
+		int i,j;
+		Map<String, Double> maps = new HashMap<>();
+		JSONObject tempjson = new JSONObject();
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		int endtime = Integer.parseInt(curTime);
+		int starttime = endtime - time;
+		
+	    File file = new File(KEYDATA_PATH);
+	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
+	    for(i=0;i<fileNameLists.length;i++)
+	    {
+			String[] temp = fileNameLists[i].split("\\.");// .号需要进行转义  加上右双斜杠
+			int x= Integer.parseInt(temp[0]);
+			if(x>=1)
+			{
+				String tempstr = file_ways.get_string(KEYDATA_PATH, x+".txt");
+				tempjson = JSONObject.parseObject(tempstr);
+				int linecount = tempjson.getIntValue("linecount");
+				for(j=0;j<linecount;j++)
+				{
+					String strtemp = tempjson.getString(""+j);
+					String splitstr[] = strtemp.split(":");
+					double bili = Double.parseDouble(splitstr[1]);
+					System.out.println(splitstr[0]+"  "+bili);
+					if(maps.containsKey(splitstr[0]))
+					{
+						bili+=maps.get(splitstr[0]);
+						maps.replace(splitstr[0], bili);
+					}
+					else
+					{
+						maps.put(splitstr[0], bili);
+					}
+					
+					
+					
+					
+					
+				}
+				
+			}
+	    	
+	    }
+	    
+
+	        
+	    sortmap(maps);
+	   // System.out.println(maps);
+		
+		return tempjson;
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		get_top_words(1,2);
+
+	}
+
+}
