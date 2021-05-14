@@ -1,0 +1,8 @@
+<resources>
+    <string name="url">http://124.93.196.45:10002</string>
+    <string name="app_name">Standard</string>
+    <string name="title_mood">Mood</string>
+    <string name="title_future">Future</string>
+    <string name="title_report">Report</string>
+    <string name="title_cloud">Cloud</string>
+</resources>
