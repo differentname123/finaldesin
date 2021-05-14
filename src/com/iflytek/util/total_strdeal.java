@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 
 public class total_strdeal {
 	// webapi接口地址
+	private static final String FIX_PATH = "./fix_path";// 不能改变的文件夹
+	private static final String BUZUO_NAME = "关键词匹配库.txt";
 	static String URL = "http://ltpapi.xfyun.cn/v1/";
 	private static final String WEBTTS_URL = "http://ltpapi.xfyun.cn/v1/pos";
 	// 应用ID
@@ -55,7 +57,10 @@ public class total_strdeal {
 		object = JSON.parseObject(result);
 		String data = object.getString("data");
 		//System.out.println(data);
-		
+		if (data == "")
+		{
+			return null;
+		}
 		JSONObject dataobject = new JSONObject();
 		
 		dataobject = JSON.parseObject(data);
@@ -156,6 +161,25 @@ public class total_strdeal {
 		
 		System.out.println(score+" "+sentiment);
 		
+	}
+
+	// 进行 关键词捕捉 通过和捕捉库比较的方法得到
+	public String BuZhuo(String str)
+	{
+		String result = "";
+		File_ways file_ways = new File_ways();
+		String tempStr = file_ways.get_recent_name(FIX_PATH, BUZUO_NAME);
+		String TempStr[] = tempStr.split(" ");
+		for(int i = 0;i<TempStr.length; i++)
+		{
+			if(str.contains(TempStr[i]))
+			{
+				result = TempStr[i];
+				break;
+			}
+				
+		}
+		return result;
 	}
 	public String Judge1(String str)//实现策略一匹配找出未来将要做的事情
 	{

@@ -200,6 +200,7 @@ public class File_ways {
         	return "0";
 		return result;
 	}
+	
 	public void write_recent_name(String path,String data,String Filename)//以覆盖的方式写入新的数据
 	{
 		String filename = path +"\\"+Filename;

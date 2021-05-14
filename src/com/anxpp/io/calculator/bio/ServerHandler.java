@@ -24,6 +24,16 @@ public class ServerHandler implements Runnable{
 	final String appid = "5fed5ca2";
 	final String api_key = "31c6c1836c5c2946fdf18ca5a9fddc5d";
 	String fileName="test.pcm";
+	public String FixExpress(String str) {
+		int len = str.length();
+		if (str.charAt(len-1) !='}' )
+		{
+			str+="\"";
+			str+="}";
+		}
+		return str; 
+		
+	}
 	@Override
 	public void run() {
 		BufferedReader in = null;
@@ -36,6 +46,7 @@ public class ServerHandler implements Runnable{
 				expression = in.readLine();
 				
 				System.out.println("收到的信息为" + expression);
+				expression = FixExpress(expression);
 				JSONObject quest = new JSONObject();
 				quest = JSON.parseObject(expression);
 				deal_quest.deal(quest, socket);

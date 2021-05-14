@@ -1,6 +1,8 @@
 import java.awt.List;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class test {
 
@@ -16,10 +18,8 @@ public class test {
     
     public static void main(String[] args) {
         //添加文件路径
-        File dir = new File("./chuangjian");
-        if (!dir.exists()) {// 判断目录是否存在     
-            dir.mkdir();   
-            System.out.println("创建成功");
-        }
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+    	String temp = df.format(new Date());
+        System.out.println(temp);// new Date()为获取当前系统时间
     }
 }

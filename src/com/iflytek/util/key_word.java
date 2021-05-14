@@ -79,7 +79,7 @@ public class key_word {
 			
 			//实时心情分析
 			System.out.println("开始进行事件捕捉");
-			String future = strdeal.Judge1(jsonobject.getString(""+i));
+			String future = strdeal.BuZhuo(jsonobject.getString(""+i));
 			String curTime = System.currentTimeMillis() / 1000L + "";
 			int Timename = Integer.parseInt(curTime);
 			Timename = Timename/86400;

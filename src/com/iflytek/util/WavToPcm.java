@@ -26,9 +26,13 @@ public class WavToPcm {
      * @param pcmfilepath pcm要保存的文件路径及文件名
      * @return
      */
+	static String PCM_DATA_PATH = "./pcmdata";//存储原始文件的路径
+	static String WAV_DATA_PATH = "./wav_data";//存储真正wav文件的路径
+	
     public static String convertAudioFiles(String wavfilepath,String pcmfilepath){//把wav转化成pcm文件
         FileInputStream fileInputStream;
         FileOutputStream fileOutputStream;
+
         try {
             fileInputStream = new FileInputStream(wavfilepath);
             fileOutputStream = new FileOutputStream(pcmfilepath);
@@ -69,7 +73,13 @@ public class WavToPcm {
         IOUtils.closeQuietly(byteStream);
         return data;
     }
- 
+    public static void WavToPcm(String FileName)
+    {
+    	String tempStr[] = FileName.split("\\.");
+    	String WavName = tempStr[0] + ".wav";
+    	String PcmName = tempStr[0] + ".pcm";
+    	convertAudioFiles(WAV_DATA_PATH + "//" + WavName, PCM_DATA_PATH + "//" + PcmName);
+    }
     public static void main(String[] args) {
         String wavFilePath="C:\\Users\\24349\\Music\\Apowersoft\\Streaming Audio Recorder\\Recording\\Track1.wav";
         String pcmFilePath="C:\\Users\\24349\\eclipse-workspace\\voice_serve1.0\\test\\test.pcm";

@@ -47,6 +47,15 @@ public class total_voice_tostring {
 	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
 	    
 		for(int i = 0; i < fileNameLists.length; i ++){
+			if (i == fileNameLists.length) {// 如果正在进行最新pcm数据的转换要等待一段时间，避免转换的是空值
+				Thread.currentThread();
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			String[] temp = fileNameLists[i].split("\\.");// .号需要进行转义  加上右双斜杠
 			int x= Integer.parseInt(temp[0]);//  提取到不含后缀的文件名对应的整数
 			//System.out.println(nowtime + "读取文件顺序" + x);

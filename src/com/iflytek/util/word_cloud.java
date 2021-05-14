@@ -40,14 +40,20 @@ import com.kennycason.kumo.palette.LinearGradientColorPalette;
 public class word_cloud {
 	private static final String BACKGROUND_PATH = "./word_cloud_background";
 	private static final String HEART_STYLE = "heart.png";
+	private static final String POSTIVE_STYLE = "heart.png";
+	private static final String NEGTIVE_STYLE = "heart.png";
+	private static final String MID_STYLE = "heart.png";
 	private static final String WORD_CLOUD_SAVEPATH = "./word_cloud_data";
+	static int NEGTIVE = -1000;
+	static int POSTIVE = 1000;
 	static File_ways file_ways = new File_ways();//声明一个文件处理对象
+	static get_recent_xinqing xinqing = new get_recent_xinqing();//声明一个心情处理对象
 	public static boolean build_cloud(int time,int xinqing,String backpath,String savename)
 	{
 		boolean result = false;
 		final List<WordFrequency> wordFrequencies = new ArrayList<>();//直接处理显示词语
-		String curTime = System.currentTimeMillis() / 1000L + "";
-		time = Integer.parseInt(curTime);
+		//String curTime = System.currentTimeMillis() / 1000L + "";
+		//time = Integer.parseInt(curTime);
 		Map<String, Double> hashMap = get_recent_top_words.get_top_words(time, 100);
 		JSONObject jsonobject = new JSONObject();
 		 Set<Entry<String, Double>> set = hashMap.entrySet();
@@ -67,6 +73,36 @@ public class word_cloud {
 		
 		return result;
 	}
+	public static void test(int count,String background)//用于生成以指定词数指定背景的词云文件位置在当前文件的word_cloud_data文件夹
+	{
+		//file_ways.creat_path("./test");
+		String temp[] = background.split("\\.");
+		String curTime = System.currentTimeMillis() / 1000L + "";
+        FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
+        // 返回字数限制
+        frequencyAnalyzer.setWordFrequenciesToReturn(count);
+        // 最短字符
+        frequencyAnalyzer.setMinWordLength(2);
+        // 引入中文解析器
+        frequencyAnalyzer.setWordTokenizer(new ChineseWordTokenizer());
+        // 设置词汇文本
+        for(int i=0;i<2;i++)
+        {
+            try {
+    			final List<WordFrequency> wordFrequencies = frequencyAnalyzer.load("C:\\Users\\24349\\Desktop\\temp\\test.txt");
+    			build_word_cloud(wordFrequencies,500,500,background,count+"_"+i+".png");
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+        }
+
+        
+        
+        
+        
+        
+	}
 	public static void build_word_cloud(List wordFrequencies,int chang,int kuan,String backstyle,String savename)//输入数据list和背景及大小生成词云
 	{
         // 生成图片尺寸 width 1920  height 1080‘
@@ -76,7 +112,7 @@ public class word_cloud {
         
         
         n = wordFrequencies.size();
-        s = (int) (chang*kuan);
+        s = (int) (chang*kuan*0.75);
         size = (int) Math.sqrt(s/3/n);//计算平均字体size大小
         // 生产词云形状
         WordCloud wordCloud = new WordCloud(dimension, CollisionMode.PIXEL_PERFECT);
@@ -138,7 +174,21 @@ public class word_cloud {
 	public static String word_cloud_produce(int time)//生成time时间内的词云，并返回词云图片名字
 	{
 		String curTime = System.currentTimeMillis() / 1000L + "";
-        build_cloud(time,100,BACKGROUND_PATH+"\\"+HEART_STYLE,curTime+".png");
+		int zhi;
+		zhi = xinqing.get_xinqing_zhi(time);
+		if(zhi<NEGTIVE)
+		{
+			build_cloud(time,100,BACKGROUND_PATH+"\\"+NEGTIVE_STYLE,curTime+".png");
+		}
+		else if(zhi>POSTIVE)
+		{
+			build_cloud(time,100,BACKGROUND_PATH+"\\"+POSTIVE_STYLE,curTime+".png");
+		}
+		else
+		{
+			build_cloud(time,100,BACKGROUND_PATH+"\\"+MID_STYLE,curTime+".png");
+		}
+        
         return curTime+".jpg";
 	}
 	public static void main(String[] args) throws IOException {
@@ -174,7 +224,11 @@ public class word_cloud {
 	        wordCloud.build(wordFrequencies);
 	        wordCloud.writeToFile("S:\\031510.png");
 	        */
-			String curTime = System.currentTimeMillis() / 1000L + "";
-	        build_cloud(100,100,BACKGROUND_PATH+"\\"+HEART_STYLE,curTime+".png");
+			//String curTime = System.currentTimeMillis() / 1000L + "";
+			//int time = Integer.parseInt(curTime);
+	        //build_cloud(time,100,BACKGROUND_PATH+"\\"+"piaochong.png",curTime+".png");
+			int number = 50;
+			for(int i = 1 ;i<10;i++)
+				test(number*i,BACKGROUND_PATH+"\\"+"heart1.png");
 	    }
 }
