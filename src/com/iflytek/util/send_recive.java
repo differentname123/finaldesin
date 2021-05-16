@@ -27,7 +27,11 @@ public class send_recive {
 	private static final String WORD_CLOUD_SAVEPATH = "./word_cloud_data";
 	private static final String RECENT_PATH = "./data";
 	private static final String WAVDATA_JILU = "wav_record.txx";
+	
 	private static final String WAVFILENAME_PATH = "./wavfilename";
+	private static final String FIX_PATH = "./fix_path";
+	
+	private static final String TUIJIAN_RECORD = "./tuijian_record";// 存储最近发送推荐文字的路径
 	static File_ways file_ways = new File_ways();
 	
 	public static void return_wav_time(Socket socket)//向终端返回最新的wav文件名
@@ -140,6 +144,7 @@ public class send_recive {
 	}
 	public static void photo_send(String str,Socket socket){
 		//发送图片
+		System.out.println("发送图片的地址为" + str);
 		DataOutputStream dos;
 		try {
 			dos = new DataOutputStream(socket.getOutputStream());
@@ -211,13 +216,37 @@ public class send_recive {
 
 		
 	}
-	public static void return_sug_str(String type,Socket socket)//表示客户端向云端访问指定事情的推荐描述
+	public static void return_novel_juzi(Socket socket)//向终端返回指定类型句子
 	{
-		String result = suggest.get_sug_str(type);
+		Http_test http_test = new Http_test();
+		String result = http_test.GetJuziNovel();
 		send_str(socket,result);
 		System.out.println("发送的句子为:" + result);
 
 		
+	}
+	public static void return_mood_str(Socket socket)//向终端返回最近心情分析
+	{
+		mood_analysis xx = new mood_analysis();
+		String result = xx.GetMoodAnalysis();
+		send_str(socket,result);
+		System.out.println("发送的句子为:" + result);
+
+		
+	}
+	public static void return_sug(String type,Socket socket)//表示客户端向云端访问指定事情的推荐描述
+	{
+		String path = suggest.get_random_name(type);
+		file_ways.write_recent_name(FIX_PATH, path, TUIJIAN_RECORD);
+		String Str = file_ways.get_recent_name(path, "txt.txt");
+		send_str(socket,Str);
+		System.out.println("发送的句子为:" + Str);
+	}
+	public static void return_sug_photo(String path,Socket socket)//表示客户端向云端访问指定事情的推荐图片
+	{
+		path = file_ways.get_recent_name(FIX_PATH, TUIJIAN_RECORD);
+		photo_send(path+"//"+"jpg (1).jpg",socket);
+		System.out.println("发送的推荐图片地址为:" + path);
 	}
 	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送心情值
 	{
@@ -235,13 +264,16 @@ public class send_recive {
 	public static String DealStr(String str)
 	{
 		String result = "";
+		String pie_data ="";
 		String temp;
 		JSONObject quest = new JSONObject();
 		quest = JSON.parseObject(str);
 		for(int i = 0;i<quest.getIntValue("linecount");i++)
 		{
+			pie_data += quest.getString(""+i) + ',';
 			System.out.print(quest.getString(""+i) + ',');
 		}
+		
 		int total_num = quest.getIntValue("totalnu");
 		temp = "今天你一共说了 " + total_num + " 个词汇"; 
 		result += temp + ".";
@@ -259,7 +291,8 @@ public class send_recive {
 		temp = "你应该很喜欢 " + fre_word + " 吧!" + "你一共提起了" + fre_count + "次";
 		result += temp + ".";
 		
-		
+		result += pie_data + ".";
+		result += total_num;// 加上总的词数，方便计算饼状图比例
 		return result;
 		
 	}

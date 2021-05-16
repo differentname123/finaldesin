@@ -120,11 +120,73 @@ public class Http_test {
 		
 		
 	}
+	public static String GetJuziNovel()// 获取小说的句子 https://v1.hitokoto.cn/?c=d
+	{
+		String result = "";
+		int max_len =30;
+		String req = "https://v1.hitokoto.cn/?" + "c=d";
+		JSONObject quest = new JSONObject();
+		boolean flag = true;
+		while(flag)
+		{
+			String temp = doGet(req);
+			quest = JSON.parseObject(temp);
+			//System.out.println(quest);
+			if(quest == null)
+			{
+				continue;
+			}
+			result = quest.getString("hitokoto") + "《" + quest.getString("from") +"》";
+			if(result.length()<max_len || (quest.getIntValue("reviewer")>2000))
+			{
+				flag = false;
+			}
+		}
+		
+			
+		return result;
+		
+		
+	}
+	public static String GetJuziType(String Type)// 获取指定类型的句子 https://v1.hitokoto.cn/?c=d
+	{
+		String result = "";
+		int max_len =50;
+		String req = "https://v1.hitokoto.cn/?" + "c=" + Type;
+		JSONObject quest = new JSONObject();
+		boolean flag = true;
+		while(flag)
+		{
+			String temp = doGet(req);
+			quest = JSON.parseObject(temp);
+			//System.out.println(quest);
+			if(quest == null)
+			{
+				continue;
+			}
+			result = quest.getString("hitokoto") + " 《" + quest.getString("from") +"》";
+			if(result.length()<max_len && (quest.getIntValue("reviewer")>1000))
+			{
+				flag = false;
+			}
+		}
+		
+			
+		return result;
+		
+		
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ArrayList<String> types = GetTypes(20000);
-		System.out.print(types);
+		//ArrayList<String> types = GetTypes(20000);
+		//System.out.print(types);
 		//System.out.print(GetJuzi(""));
+		for(int i=0;i<10;i++)
+		{
+			String result = GetJuziNovel();
+			System.out.println(result);
+		}
+		
 
 	}
 

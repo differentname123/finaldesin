@@ -15,6 +15,58 @@ import com.alibaba.fastjson.JSONObject;
 
 public class File_ways {
 	
+	
+	
+	public String get_random_line(String path)// 获得指定路径下随机一个文件的一行数据
+	{
+		String result = "";
+		 File file = new File(path);
+		 String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
+		 int index = (int)(Math.random()*fileNameLists.length);
+		 result = get_recent_name(path, fileNameLists[index]);
+		return result ;
+		
+	}
+	public void build_many_file(String originFile, String DesPath)// 将原文件的多行内容生成多行文件
+	{
+		creat_path(DesPath);
+		
+		
+		String filename = originFile;
+		BufferedReader reader = null;
+        try {
+
+        	reader=new BufferedReader(new InputStreamReader(new FileInputStream(filename),"UTF-8"));
+            //System.out.println("以行为单位读取文件内容，一次读一整行：");
+            String tempString = null;
+            int line = 0;
+            // 一次读入一行，直到读入null为文件结束
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+            	if(tempString.length()!=0)//判断是否为空换行
+            	{
+                	String TempStr[] = tempString.split("\\.");
+                	String str[] = TempStr[1].split("，");
+                	write_string(DesPath,TempStr[1], str[0] + ".txt");
+                	
+            	}
+
+            }
+            reader.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+       
+		
+	}
 	public void creat_path(String path)//创建一个文件夹，如果存在就忽略
 	{
 		File folder = new File(path);

@@ -46,13 +46,25 @@ public class deal_quest {
 			}
 			if(order.equals("215"))//表示客户端向云端访问指定事情的推荐描述
 			{
-				sandr.return_juzi(data,socket);
+				sandr.return_sug(data,socket);
 			}
+			
 			if(order.equals("216"))//表示客户端向云端访问指定事情的推荐图片
+			{
+				sandr.return_sug_photo(data,socket);
+			}
+			if(order.equals("217"))//表示客户端向云端访问指定类型句子
 			{
 				sandr.return_juzi(data,socket);
 			}
-			
+			if(order.equals("218"))//表示客户端向云端访问小说类的名言
+			{
+				sandr.return_novel_juzi(socket);
+			}
+			if(order.equals("219"))//表示客户端向云端访问最近心情分析
+			{
+				sandr.return_mood_str(socket);
+			}
 		}
 		// 请求来自感知层
 		if(from==1)
