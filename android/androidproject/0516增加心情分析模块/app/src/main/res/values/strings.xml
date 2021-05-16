@@ -1,0 +1,8 @@
+<resources>
+    <string name="url">http://124.93.196.45:10002</string>
+    <string name="app_name">giao</string>
+    <string name="title_mood">MOOD</string>
+    <string name="title_future">SUGGEST</string>
+    <string name="title_report">SUMMARY</string>
+    <string name="title_cloud">CLOUD</string>
+</resources>
