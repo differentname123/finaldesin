@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:background="#e8faf9"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.future.FutureFragment"
+
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tuijian"
+            android:background="#ccfaf9"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="top|center"
+            android:text="GUESS YOU LIKE IT"
+            android:textColor=" #FF2400"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="@+id/image"
+            app:layout_constraintStart_toStartOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_gravity="center"/>
+        <com.fb.standard.view.ImageWithTextView
+            android:id="@+id/image_with_text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.fb.standard.view.ImageWithTextView
+            android:id="@+id/image_with_text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.fb.standard.view.ImageWithTextView
+            android:id="@+id/image_with_text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/fenge"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="BO JUN SMILES"
+            android:background="#ccfbf8"
+            android:textColor=" #FF2400"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="@+id/image"
+            app:layout_constraintStart_toStartOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/juzi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:scrollbars="vertical"
+
+            android:text="Falling in love with yourself first doesn’t make you vain or selfish, it makes you indestructible."
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="@+id/image"
+            app:layout_constraintStart_toStartOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</layout>
