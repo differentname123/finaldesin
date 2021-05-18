@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/Msc.jar"/>
+	<classpathentry kind="lib" path="lib/json-jena-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
+	<classpathentry kind="lib" path="lib/fastjson-1.2.75.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.8.0-tests.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.8.0-test-sources.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/cjftransform-1.0.1.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/dom4j.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/guava-mini-0.1.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/ictclas4j-1.0.1.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/jcl-over-slf4j-1.7.7.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/jul-to-slf4j-1.7.26.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/jul-to-slf4j-1.7.30.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/kumo-api-1.17.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/kumo-core-1.17.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/kumo-core-1.17-sources.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/kumo-tokenizers-1.17.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/language-en-2.5.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/languagetool-core-2.5.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/language-zh-2.5.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/log4j-to-slf4j-2.11.2.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/log4j-to-slf4j-2.9.1.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/rtree-0.8.6.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/rxjava-1.2.10.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/rxjava-extras-0.8.0.7.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/segment-1.4.2.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-api-1.5.6.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-api-1.7.26.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-api-1.7.30.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-jdk14-1.5.6.jar"/>
+	<classpathentry kind="lib" path="word_cloud_lib/slf4j-log4j12-1.7.25.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

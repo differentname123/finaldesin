@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="time"
+            type="String" />
+    </data>
+    <LinearLayout
+        android:background="#FAFFF7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".word_cloud"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/lunkuo"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+
+            android:textColor="#f7acbc"
+            />
+
+        <ImageView
+
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="546dp"
+            android:layout_weight="1.5"
+             />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+
+            android:textColor="#f7acbc"
+            />
+
+
+        <Button
+            android:id="@+id/word_cloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFB5C5"
+            android:text="更新词云" />
+
+
+    </LinearLayout>
+</layout>
