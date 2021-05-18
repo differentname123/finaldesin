@@ -65,6 +65,10 @@ public class deal_quest {
 			{
 				sandr.return_mood_str(socket);
 			}
+			if(order.equals("21A"))//表示客户端向云端访问最近词云背景图
+			{
+				sandr.return_word_cloud_background(socket);
+			}
 		}
 		// 请求来自感知层
 		if(from==1)

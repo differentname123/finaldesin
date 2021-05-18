@@ -16,8 +16,8 @@ public class mood_analysis {
 		String TempStr[] = origin_data.split(" ");
 		String zhi_lei = "低";
 		String cha_lei = "小";
-		int zhi = Integer.parseInt(TempStr[0]);
-		int cha = Integer.parseInt(TempStr[1]);
+		int zhi = Integer.parseInt(TempStr[1]);
+		int cha = Integer.parseInt(TempStr[0]);
 
 		if(cha>ChaJudge)
 		{

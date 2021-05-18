@@ -99,6 +99,8 @@ public class get_recent_top_words {
 		
 	}
 	public static void main(String[] args) {
+		String curTime = System.currentTimeMillis() / 1000L + "";
+		System.out.print(curTime);
 		// TODO Auto-generated method stub
 		Map<String, Double> hashMap= get_top_words(1,2);
 		

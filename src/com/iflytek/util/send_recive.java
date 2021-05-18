@@ -27,7 +27,8 @@ public class send_recive {
 	private static final String WORD_CLOUD_SAVEPATH = "./word_cloud_data";
 	private static final String RECENT_PATH = "./data";
 	private static final String WAVDATA_JILU = "wav_record.txx";
-	
+	private static final String BACKGROUND_PATH = "./word_cloud_background";
+	private static final String BACKGROUND_RECORD = "background_record.txt";// 记录最近生成词云轮廓的名字
 	private static final String WAVFILENAME_PATH = "./wavfilename";
 	private static final String FIX_PATH = "./fix_path";
 	
@@ -200,6 +201,13 @@ public class send_recive {
 		send_str(socket,jsonobject.toString());
 		
 	}
+	public static void return_word_cloud_background(Socket socket)//向终端以图片形式发送词云背景图
+	{
+		String result = file_ways.get_recent_name(BACKGROUND_PATH, BACKGROUND_RECORD);
+		photo_send(BACKGROUND_PATH+"\\"+result,socket);
+		//photo_send("./word_cloud_data\\1615965939.jpg",socket);
+		
+	}
 	public static void return_word_cloud(int time,Socket socket)//向终端以图片形式发送词云
 	{
 		String result = word_cloud.word_cloud_produce(time);
@@ -245,7 +253,7 @@ public class send_recive {
 	public static void return_sug_photo(String path,Socket socket)//表示客户端向云端访问指定事情的推荐图片
 	{
 		path = file_ways.get_recent_name(FIX_PATH, TUIJIAN_RECORD);
-		photo_send(path+"//"+"jpg (1).jpg",socket);
+		photo_send(path+"//"+"jpg.jpg",socket);
 		System.out.println("发送的推荐图片地址为:" + path);
 	}
 	public static void return_xinqing(int time,Socket socket)//向终端以json嵌套json格式发送心情值
