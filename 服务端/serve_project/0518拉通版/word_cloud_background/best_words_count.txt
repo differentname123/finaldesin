@@ -1,0 +1,5 @@
+bear_hand.png 32 37 49 60
+cat.png 32 34 52 76
+dolphin.png 19 33 43 76
+heart.png 35 43 46 76
+whale_small.png 24 35 55 61

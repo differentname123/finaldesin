@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background = "@drawable/pink_sky"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="text"
+        android:textSize="30sp"
+        android:textColor="#f391a9"
+        android:textStyle="bold"
+        android:paddingLeft="20dp"/>
+
+</RelativeLayout>

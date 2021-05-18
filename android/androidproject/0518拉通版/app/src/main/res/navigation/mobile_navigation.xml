@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_cloud">
+
+    <fragment
+        android:id="@+id/navigation_cloud"
+        android:name="com.fb.standard.ui.cloud.CloudFragment"
+        tools:layout="@layout/fragment_cloud" />
+
+    <fragment
+        android:id="@+id/navigation_mood"
+        android:name="com.fb.standard.ui.mood.MoodFragment"
+        tools:layout="@layout/fragment_mood" />
+
+    <fragment
+        android:id="@+id/navigation_future"
+        android:name="com.fb.standard.ui.future.FutureFragment"
+        tools:layout="@layout/fragment_future" />
+
+    <fragment
+        android:id="@+id/navigation_report"
+        android:name="com.fb.standard.ui.report.ReportFragment"
+        tools:layout="@layout/fragment_report" />
+
+</navigation>
