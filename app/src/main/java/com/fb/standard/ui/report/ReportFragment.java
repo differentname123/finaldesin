@@ -4,11 +4,13 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fb.standard.R;
 import com.fb.standard.adapter.ViewPagerAdapter;
@@ -37,6 +39,8 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
 
     private ViewPagerAdapter adapter;
     String ReportStr = "";
+    String ReportJuzi = "";
+    TextView Report_juzi;
     Map<String, String> cixin_map = new HashMap<String,String>(); // 用于存储词性的英文和中文对照关系
     int Index = 0;
     double Min_Zhanshi = 0.027; // 饼状图能展示的最小比例
@@ -47,6 +51,7 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
 
     @Override
     protected void initData() {
+
 
     }
 
@@ -73,15 +78,22 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
         text_views.add(page2.findViewById(R.id.text));
         text_views.add(page3.findViewById(R.id.text));
         PieChart pieChart = page4.findViewById(R.id.pieChart);
-
+        Report_juzi = page4.findViewById(R.id.reportJuzi);
         mThreadPool.execute(new Runnable() {
             @Override
             public void run() {
 
+                Looper.prepare();
+                Toast.makeText(getContext(), "正在生成请稍后", Toast.LENGTH_SHORT).show();
+
                 String curTime = System.currentTimeMillis() / 1000L + "";
                 int Timename = Integer.parseInt(curTime);
                 ReportStr=tongxing.get_report(Timename);
+                ReportJuzi = tongxing.get_novel_juzi();
                 handler.post(adjust_text);
+                handler.post(JuZi);
+
+
 
 
                 // 进行饼状图的生成
@@ -112,6 +124,24 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
                 pieChart.setData(data);
                 pieChart.notifyDataSetChanged();
                 pieChart.setTouchEnabled(false);
+
+                Looper.loop();
+
+            }
+        });
+
+        Report_juzi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mThreadPool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        ReportJuzi=tongxing.get_novel_juzi();
+                        handler.post(JuZi);
+
+                    }
+                });
 
             }
         });
@@ -254,6 +284,14 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
         cixin_map.put("x","非词位");
 
     }
+
+    Runnable   JuZi=new  Runnable(){
+        @Override
+        public void run() {
+            //更新界面
+            Report_juzi.setText(ReportJuzi);
+        }
+    };
     Runnable   adjust_text=new  Runnable(){
         @Override
         public void run() {
@@ -263,6 +301,7 @@ public class ReportFragment extends BaseFragment<FragmentReportBinding, ReportVi
             {
                 text_views.get(i).setText(TempStr[i]);
             }
+            Report_juzi.setText(ReportJuzi);
         }
     };
     Runnable   adjust_text_zhiding=new  Runnable(){

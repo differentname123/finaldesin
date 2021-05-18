@@ -290,7 +290,7 @@ public class MoodFragment extends BaseFragment<FragmentMoodBinding, MoodViewMode
         if(linecount == 0)
         {
             Looper.prepare();
-            Toast.makeText(getContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "暂无周数据", Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
         Log.d("xinqing",linecount+"");
@@ -323,10 +323,10 @@ public class MoodFragment extends BaseFragment<FragmentMoodBinding, MoodViewMode
         JSONObject tempjson = new JSONObject();
         JSONObject js =JSONObject.fromObject(result); //string转json格式
         linecount = js.getInt("linecount");
-        if(linecount == 1)
+        if(linecount == 0)
         {
             Looper.prepare();
-            Toast.makeText(getContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "暂无日数据", Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
         Log.d("xinqing",linecount+"");
@@ -361,7 +361,7 @@ public class MoodFragment extends BaseFragment<FragmentMoodBinding, MoodViewMode
         if(linecount == 0)
         {
             Looper.prepare();
-            Toast.makeText(getContext(), "暂无数据", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "暂无月数据", Toast.LENGTH_SHORT).show();
             Looper.loop();
         }
         Log.d("xinqing",linecount+"");

@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 
 public class TongXing {
 	private static int DEFAULT_SERVER_PORT = 12345;
-	private static String DEFAULT_SERVER_IP = "192.168.33.115";
+	private static String DEFAULT_SERVER_IP = "192.168.56.115";
 	TCPSocket tcpsocket;
 
 	{
@@ -95,6 +95,10 @@ public class TongXing {
 
 			ByteArrayOutputStream outPut = new ByteArrayOutputStream();
 			bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+			if(bmp == null)
+			{
+				return bmp;
+			}
 			Log.d("TCP1", bmp.toString());
 			bmp.compress(Bitmap.CompressFormat.JPEG, 100, outPut);
 			dataInput.close();
@@ -180,6 +184,23 @@ public class TongXing {
 		send_str(socket,quest);
 		bitmap = recievephoto(socket);
 
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
+
+	public  Bitmap get_word_cloud_background()//获取指定时间段内的词云图
+	{
+		Bitmap bitmap = null;
+		Socket socket = build_link(DEFAULT_SERVER_IP,DEFAULT_SERVER_PORT);
+
+		String quest = produce_order("21A","123",0,100);
+		send_str(socket,quest);
+		bitmap = recievephoto(socket);
 		try {
 			socket.close();
 		} catch (IOException e) {

@@ -17,23 +17,25 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/lightBlue"/>
+            android:background="#feeeed"/>
 
         <TextView
             android:id="@+id/title"
+            style="@style/big_title_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Title"
-            style="@style/big_title_font" />
+            android:textColor="#afdfe4" />
     </RelativeLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
+        app:itemIconTint="#f69c9f"
+        app:itemTextColor="#f58f98"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

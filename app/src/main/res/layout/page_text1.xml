@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:textSize="35sp"
+        android:fontFamily="@v"
         android:textColor="#fedcbd"
         android:textStyle="bold"
         android:paddingLeft="20dp"/>

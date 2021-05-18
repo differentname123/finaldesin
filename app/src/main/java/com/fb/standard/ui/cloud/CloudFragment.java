@@ -1,7 +1,9 @@
 package com.fb.standard.ui.cloud;
 
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import java.util.concurrent.Executors;
 public class CloudFragment extends BaseFragment<FragmentCloudBinding, CloudViewModel> {
     private Button button,word_cloud,Receive,disconnect;//定义按钮变量
     private int progress = 0;
+    Typeface typeface;
     private Toast toast = null;
     private ImageView imageView = null;//定义图片变量
     private ExecutorService mThreadPool;//声明线程池
@@ -36,6 +39,7 @@ public class CloudFragment extends BaseFragment<FragmentCloudBinding, CloudViewM
     private BufferedReader br;
     private OutputStream outputStream;
     public Bitmap bmp = null;
+    public Bitmap bmp_background = null;
     private Handler handler=null;//用于线程改变控件
     TongXing tongxing = new TongXing();//声明通信的对象
     @Override
@@ -48,10 +52,15 @@ public class CloudFragment extends BaseFragment<FragmentCloudBinding, CloudViewM
                     @Override
                     public void run() {
 
+
+                        Looper.prepare();
+                        Toast.makeText(getContext(), "正在生成请稍后", Toast.LENGTH_SHORT).show();
+
                         //接收图片数据
                         String curTime = System.currentTimeMillis() / 1000L + "";
                         int Timename = Integer.parseInt(curTime);
                         bmp=tongxing.get_word_cloud(Timename);
+                        bmp_background = tongxing.get_word_cloud_background();
                         Log.d("TCP2", String.valueOf(bmp));
                         while(bmp==null);
                         Log.d("TCP4", String.valueOf(bmp));
@@ -60,6 +69,7 @@ public class CloudFragment extends BaseFragment<FragmentCloudBinding, CloudViewM
                         handler.post(runnableUi);//使用主线程改变控件imageview
 
                         Log.d("TCP5", String.valueOf(bmp));
+                        Looper.loop();
 
                     }
                 });
@@ -92,8 +102,13 @@ public class CloudFragment extends BaseFragment<FragmentCloudBinding, CloudViewM
         @Override
         public void run() {
             //更新界面
+            binding.lunkuo.setImageBitmap(bmp_background);
+            binding.textView.setText("词云背景图");
+
             imageView.setImageBitmap(bmp);
+            binding.textView1.setText("关键词词云");
             bmp=null;
+            bmp_background = null;
         }
 
     };

@@ -33,15 +33,21 @@ public class FutureFragment extends BaseFragment<FragmentFutureBinding, FutureVi
     {
         String result;
         String TempStr[] = str.split("\\?\\?");
+        if(TempStr.length<2)
+            return "把握当下";
         result = TempStr[1];
         return result;
 
     }
     public String get_title(String str)// 解析并返回网址
     {
+
         String result;
         String TempStr[] = str.split("\\?\\?");
+        if(TempStr.length<3)
+            return "把握当下";
         result = TempStr[2];
+
         return result;
 
     }
@@ -68,6 +74,7 @@ public class FutureFragment extends BaseFragment<FragmentFutureBinding, FutureVi
         TongXing tongxing = new TongXing();//声明通信的对象
         binding.juzi.setMovementMethod(ScrollingMovementMethod.getInstance());
         String tempJuzi = "";//接收到的句子
+        binding.fenge.setMovementMethod(ScrollingMovementMethod.getInstance());
 //        binding.imageWithText.setTitle("Title");
 //        binding.imageWithText.setContent("Content");
         ImageWithTextView =new ImageWithTextView[]{binding.imageWithText1,binding.imageWithText2,binding.imageWithText3};
@@ -115,7 +122,7 @@ public class FutureFragment extends BaseFragment<FragmentFutureBinding, FutureVi
 
             }
         });
-        binding.juzi.setOnClickListener(new View.OnClickListener() {
+        binding.fenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mThreadPool.execute(new Runnable() {
@@ -192,7 +199,8 @@ public class FutureFragment extends BaseFragment<FragmentFutureBinding, FutureVi
             for(int i = 0;i<KongjianCount;i++)
             {
                 ImageWithTextView[i].setContent(get_str(strArray.get(i)));
-                ImageWithTextView[i].setImageResource(bmpArray.get(i));
+                if(bmpArray.get(i) != null)
+                    ImageWithTextView[i].setImageResource(bmpArray.get(i));
                 ImageWithTextView[i].setTextResource(get_title(strArray.get(i)));
             }
 
