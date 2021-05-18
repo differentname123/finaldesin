@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 
 public class TongXing {
 	private static int DEFAULT_SERVER_PORT = 12345;
-	private static String DEFAULT_SERVER_IP = "192.168.56.115";
+	private static String DEFAULT_SERVER_IP = "192.168.13.115";
 	TCPSocket tcpsocket;
 
 	{
