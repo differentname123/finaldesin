@@ -119,7 +119,7 @@ public class send_recive {
                 	da.writeBytes(tempStr+"\n");
                 	if (IsEnd(tempStr))
                 		break;
-                	//System.out.println(tempStr);
+                	System.out.println(tempStr);
                 }
                 da.flush();
                 da.close();

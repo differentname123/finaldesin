@@ -25,7 +25,7 @@ public class get_recent_future {
 	    File file = new File(celue1path);
 	    String[] fileNameLists = file.list();  //这是不带绝对路径的文件名
 	    
-		for(int i = 0; i < fileNameLists.length; i ++){
+		for(int i = fileNameLists.length -1; i >=0; i --){ //逆序就能找到最新的值
 			String[] temp = fileNameLists[i].split("\\.");// .号需要进行转义  加上右双斜杠
 			int x= Integer.parseInt(temp[0]);//  提取到不含后缀的文件名对应的整数
 			//System.out.println(nowtime + "读取文件顺序" + x);
@@ -38,7 +38,13 @@ public class get_recent_future {
 				{
 					String word = jsonobject.getString(""+j);
 					hs.add(word);
+					
 				}
+			}
+			if(hs.size()>2)// 只需要找三个关键词就行了因为客户端只有三个推荐位
+			{
+				
+				 break;
 			}
 		}
 		
