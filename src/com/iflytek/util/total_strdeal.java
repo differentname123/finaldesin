@@ -67,7 +67,8 @@ public class total_strdeal {
 		String word = dataobject.getString("word");
 		//System.out.println(word);
 		
-		
+		if(word == null)
+			return null;
 		String temp[] = word.split("\"");
 		String xx ="";
 		for(int i=0;i<temp.length;i++)

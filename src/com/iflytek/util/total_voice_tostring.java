@@ -73,10 +73,14 @@ public class total_voice_tostring {
 				}
 				System.out.println(x+" 最终转换结果" + str_re);
 				*/
-				file_ways.write_recent_name(RECENT_PATH,""+x,PCMDATA_JILU);//该进行记录的回写
-				file_ways.write_string(STRDATA_PATH,str_re,x+".txt");
+				if(str_re != null)
+				{
+					file_ways.write_recent_name(RECENT_PATH,""+x,PCMDATA_JILU);//该进行记录的回写
+					file_ways.write_string(STRDATA_PATH,str_re,x+".txt");
+				}
+
 				nowtime = x;
-				System.out.println(x+" 转换完成");
+				System.out.println(x+" 转换完成:" + str_re);
 				//转换后内容的写入
 			}
 			

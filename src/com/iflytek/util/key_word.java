@@ -41,16 +41,59 @@ public class key_word {
 	private static final String celue1path = "./celue1";
 	private static final String celue2path = "./celue2";
 	
-	File_ways file_ways = new File_ways();//声明一个文件处理对象
+	static File_ways file_ways = new File_ways();//声明一个文件处理对象
 	
 	public static void main(String[] args) throws IOException {
+		/*
 		System.out.println(TEXT.length());
 		Map<String, String> header = buildHttpHeader();
 		String result = HttpUtil.doPost1(WEBTTS_URL, header, "text=" + URLEncoder.encode(TEXT, "utf-8"));
 		System.out.println("itp 接口调用结果：" + result);
+		*/
+		FindAverageMood();
 		
 	}
 
+	
+	public static void FindAverageMood()// 找到心情好坏判断的基准值，也找到最大的情绪差值，用它的一般作为情绪波动判断
+	{
+		int max = 0,min = 10000;
+		int i;
+		long total = 0;
+		String line_str = "";
+		String all_str = file_ways.get_string("F:\\temp\\final_desine\\服务端\\心情图表\\心情好坏及波动分析数据", "励志句子20条.txt");
+		JSONObject json_object = new JSONObject();
+		json_object = JSON.parseObject(all_str);
+		for(i = 0; i<json_object.getIntValue("linecount");i++ )
+		{
+			line_str = json_object.getString(""+i);
+			total_strdeal strdeal =new total_strdeal();
+			String result11 = strdeal.sa(line_str);;
+			JSONObject saobject = new JSONObject();
+			saobject = JSON.parseObject(result11);
+			String sascore = saobject.getString("score");
+			String sasentiment = saobject.getString("sentiment");
+			if(sascore==null||sasentiment==null)
+				continue;
+			double satemp =  Double.parseDouble(sascore);
+			int sasenttemp = Integer.parseInt(sasentiment);
+			int tempre =  (int) (10000*satemp*sasenttemp);
+			if(tempre >max)
+				max = tempre;
+			if(min>tempre)
+				min = tempre;
+			System.out.println(tempre);
+			total +=tempre;
+			file_ways.write_data("F:\\temp\\final_desine\\服务端\\心情图表\\心情好坏及波动分析数据",  "			情绪值:" + tempre + line_str, "情绪分析结果.txt");
+			file_ways.write_data("F:\\temp\\final_desine\\服务端\\心情图表\\心情好坏及波动分析数据", tempre + "", "情绪值分析结果.txt");
+
+		
+		}
+		System.out.println("  总条数" + i + "  心情总值" + total + "  平均值:" + (double)total/i + "   最大差值:" + (max - min));
+		file_ways.write_data("F:\\temp\\final_desine\\服务端\\心情图表\\心情好坏及波动分析数据", "  总条数" + i + "  心情总值" + total + "  平均值:" + (double)total/i + "   最大差值:" + (max - min), "情绪值分析结果.txt");
+
+
+	}
 	
 	//进行关键字的提取和策略一的进行
 	public String get_keyword(String filename,String appid,String api_key,String path,String savefilename,String savepath) throws UnsupportedEncodingException

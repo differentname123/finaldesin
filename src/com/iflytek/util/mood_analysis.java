@@ -3,8 +3,8 @@ package com.iflytek.util;
 
 public class mood_analysis {
 	static File_ways file_ways = new File_ways();
-	static int ChaJudge = 100;// 最大差值比这个大就是大
-	static int AvergeJudge = 1000; // 平均心情值比这个高那就是高
+	static int ChaJudge = 5000;// 最大差值比这个大就是大
+	static int AvergeJudge = 3217; // 平均心情值比这个高那就是高
 	private static final String MOOD_RECORD_PATH = "./data";
 	private static final String MOOD_RECORD_NAME = "mood_record.txt";
 	private static final String MOOD_DATA_PATH = "./fix_path/心情分析数据";
